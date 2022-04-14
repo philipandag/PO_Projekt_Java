@@ -3,16 +3,16 @@ package com.Gołaś.Filip;
 import javax.swing.*;
 import java.awt.*;
 
-public class Okno extends JFrame{
+public class OknoGry extends JFrame{
     private Plansza plansza;
     private Gui gui;
     private Swiat swiat;
-    Okno(int polWPoziomie, int polWPionie) {
+    OknoGry(int polWPoziomie, int polWPionie) {
         super("Zwierzatka");
         swiat = new Swiat(polWPoziomie, polWPionie);
         plansza = new Plansza(polWPoziomie, polWPionie, swiat);
         swiat.setPlansza(plansza);
-        gui = new Gui();
+        gui = new Gui(swiat);
         add(gui, BorderLayout.PAGE_START);
         gui.add(plansza);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

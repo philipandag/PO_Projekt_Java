@@ -18,7 +18,11 @@ public class Pole extends JButton{
     private Swiat swiat;
     private boolean puste;
     private Color pusteKolor;
-    public Pole(Color background, Swiat swiat) {
+    private int posX;
+    private int posY;
+    public Pole(Color background, Swiat swiat, int x, int y) {
+        this.posX = x;
+        this.posY = y;
         this.swiat = swiat;
         this.organizm = null;
         this.puste = true;
@@ -45,6 +49,7 @@ public class Pole extends JButton{
         puste = false;
         setBackground(organizm.getKolor());
         setText(organizm.getZnak());
+        setForeground(Color.BLACK);
     }
 
     public void usunOrganizm(){
@@ -62,5 +67,12 @@ public class Pole extends JButton{
 
     public boolean puste(){
         return puste;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+    public int getPosY(){
+        return posY;
     }
 }

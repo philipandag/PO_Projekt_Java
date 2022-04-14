@@ -6,7 +6,8 @@ public class Main {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                Okno o = new Okno(7,9);
+                OknoKonsola k = new OknoKonsola();
+                OknoGry o = new OknoGry(20,20);
             }
         };
         SwingUtilities.invokeLater(r);

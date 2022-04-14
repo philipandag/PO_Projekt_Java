@@ -20,7 +20,7 @@ public class Plansza extends JPanel {
                 Color color = index % 2 == 0 ? Color.WHITE : new Color(230, 230,230);
                 gbc.gridx = col;
                 gbc.gridy = row;
-                add(new Pole(color, swiat), gbc);
+                add(new Pole(color, swiat, col, row), gbc);
                 index++;
             }
             if(wymiarX%2==0)

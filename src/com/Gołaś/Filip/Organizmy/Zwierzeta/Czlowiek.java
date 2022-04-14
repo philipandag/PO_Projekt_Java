@@ -7,6 +7,11 @@ import java.awt.*;
 
 public class Czlowiek extends Zwierze {
     public Czlowiek(){
-        super(new Color(50, 200, 150), "C",4);
+        super(new Color(50, 200, 150), "C", 4);
+    }
+
+    @Override
+    public void akcja(){
+        System.out.println("Czlowiek akcja!");
     }
 }

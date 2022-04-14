@@ -8,6 +8,7 @@ public abstract class Organizm implements Comparable<Organizm>{
     private Color kolor;
     private int inicjatywa;
     private String znak;
+
     public Organizm(Color kolor, String znak, int inicjatywa){
         this.znak = znak;
         this.kolor = kolor;
@@ -36,4 +37,9 @@ public abstract class Organizm implements Comparable<Organizm>{
     public String getZnak(){
         return znak;
     }
+
+    public Integer getInicjatywa(){
+        return inicjatywa;
+    }
+    public abstract void akcja();
 }
