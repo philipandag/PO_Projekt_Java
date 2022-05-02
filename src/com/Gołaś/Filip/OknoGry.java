@@ -2,6 +2,8 @@ package com.Gołaś.Filip;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class OknoGry extends JFrame{
     private Plansza plansza;
@@ -10,9 +12,11 @@ public class OknoGry extends JFrame{
     OknoGry(int polWPoziomie, int polWPionie) {
         super("Zwierzatka");
         swiat = new Swiat(polWPoziomie, polWPionie);
+        swiat.setOkno(this);
         plansza = new Plansza(polWPoziomie, polWPionie, swiat);
         swiat.setPlansza(plansza);
         gui = new Gui(swiat);
+
         add(gui, BorderLayout.PAGE_START);
         gui.add(plansza);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

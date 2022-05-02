@@ -1,5 +1,6 @@
 package com.Gołaś.Filip.Organizmy.Zwierzeta;
 
+import com.Gołaś.Filip.Kierunek;
 import com.Gołaś.Filip.Organizmy.Zwierze;
 import com.Gołaś.Filip.Swiat;
 
@@ -13,5 +14,7 @@ public class Wilk extends Zwierze {
     @Override
     public void akcja(){
         System.out.println("Wilk akcja!");
+        Kierunek k = Kierunek.losuj();
+        moveTo(getPosX() + k.getDx(), getPoxY() + k.getDy());
     }
 }

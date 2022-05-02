@@ -4,11 +4,12 @@ import java.awt.*;
 import java.time.temporal.Temporal;
 
 public abstract class Organizm implements Comparable<Organizm>{
-    private Swiat swiat;
-    private Color kolor;
-    private int inicjatywa;
-    private String znak;
-
+    protected Swiat swiat;
+    protected Color kolor;
+    protected int inicjatywa;
+    protected String znak;
+    protected int posX;
+    protected int poxY;
     public Organizm(Color kolor, String znak, int inicjatywa){
         this.znak = znak;
         this.kolor = kolor;
@@ -42,4 +43,18 @@ public abstract class Organizm implements Comparable<Organizm>{
         return inicjatywa;
     }
     public abstract void akcja();
+
+    public void moveTo(int x, int y){
+        Pole[][] grid = swiat.getPlanszaGrid();
+        grid[this.posX][this.poxY].setPole(null);
+        grid[x][y].setPole(this);
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPoxY() {
+        return poxY;
+    }
 }

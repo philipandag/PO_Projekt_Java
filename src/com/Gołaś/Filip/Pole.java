@@ -1,18 +1,11 @@
 package com.Gołaś.Filip;
 
-import com.Gołaś.Filip.Organizmy.Zwierzeta.Czlowiek;
-
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import com.Gołaś.Filip.OrganizmPopUp;
 public class Pole extends JButton{
     private Organizm organizm;
     private Swiat swiat;
@@ -44,16 +37,20 @@ public class Pole extends JButton{
         return swiat;
     }
     public void setPole(Organizm organizm){
+        if(organizm == null){
+            wyczyscPole();
+            return;
+        }
         this.organizm = organizm;
-        organizm.setSwiat(swiat);
+        organizm.posX = this.posX;
+        organizm.poxY = this.posY;
         puste = false;
         setBackground(organizm.getKolor());
         setText(organizm.getZnak());
         setForeground(Color.BLACK);
     }
 
-    public void usunOrganizm(){
-        swiat.usunOrganizm(organizm);
+    public void wyczyscPole(){
         organizm = null;
         puste = true;
         setBackground(pusteKolor);

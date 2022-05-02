@@ -8,10 +8,12 @@ public class Plansza extends JPanel {
     private int wymiarX;
     private int wymiarY;
     private Swiat swiat;
+    private Pole grid[][];
     public Plansza(int wymiarX, int wymiarY, Swiat swiat){
         this.swiat = swiat;
         this.wymiarX = wymiarX;
         this.wymiarY = wymiarY;
+        this.grid = new Pole[wymiarX][wymiarY];
         int index = 0;
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -20,11 +22,18 @@ public class Plansza extends JPanel {
                 Color color = index % 2 == 0 ? Color.WHITE : new Color(230, 230,230);
                 gbc.gridx = col;
                 gbc.gridy = row;
-                add(new Pole(color, swiat, col, row), gbc);
+                Pole pole = new Pole(color, swiat, col, row);
+                add(pole, gbc);
+                grid[col][row] = pole;
                 index++;
             }
             if(wymiarX%2==0)
                 index++;
         }
     }
+    public Pole[][] getGrid()
+    {
+        return grid;
+    }
+
 }
