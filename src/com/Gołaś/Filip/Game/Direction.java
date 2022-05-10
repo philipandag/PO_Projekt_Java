@@ -32,7 +32,7 @@ public enum Direction {
     }
 
     public Direction next(){
-        return values()[ordinal() + 1];
+        return values()[(ordinal() + 1) % SIZE];
     }
 
     @Override

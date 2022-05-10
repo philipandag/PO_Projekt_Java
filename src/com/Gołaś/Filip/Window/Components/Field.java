@@ -27,7 +27,6 @@ public class Field extends JButton{
         this.EMPTY_COLOUR = background;
         setBackground(EMPTY_COLOUR);
         setBorder(new EmptyBorder(0, 0, 0, 0));
-
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -82,6 +81,8 @@ public class Field extends JButton{
 
     public void updateFont(Dimension dimension){
         Font font = getFont();
-        setFont(new Font(font.getName(), Font.PLAIN, Math.max(font.getSize(), dimension.height)));
+        setFont(new Font(font.getName(), Font.PLAIN, dimension.height));
+        setMaximumSize(dimension);
+        setMinimumSize(dimension);
     }
 }

@@ -10,7 +10,7 @@ public class Antelope extends Animal {
     private static final int BREEDING_COOLDOWN = 3;
     private static final int STRENGTH = 4;
     private static final int INITIATIVE = 4;
-    private static final String NAME = "Antylopa";
+    private static final String NAME = "Antelope";
     private static final String CHARACTER = "A";
     private static final Color COLOR = new Color(180, 180, 80);
     private static final double ESCAPE_CHANCE = 0.5;

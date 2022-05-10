@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class Gui extends JPanel {
+    private static final String SAVE_FILE_PATH = "zapis.zwierzaki";
     World world;
     HumanInputIndicator hdi;
     public Gui(World world){
@@ -18,8 +19,8 @@ public class Gui extends JPanel {
         tools.setFloatable(false);
         add(tools, BorderLayout.PAGE_START);
         tools.add(new NextTurnButton(world));
-        tools.add(new SaveButton(world));
-        tools.add(new LoadButton(world));
+        tools.add(new SaveButton(world, SAVE_FILE_PATH));
+        tools.add(new LoadButton(world, SAVE_FILE_PATH));
         hdi = new HumanInputIndicator(Direction.N, world.getWindow());
         tools.add(hdi);
         world.addHumanDirectionListener(hdi);

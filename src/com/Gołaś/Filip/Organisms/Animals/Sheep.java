@@ -9,8 +9,8 @@ public class Sheep extends Animal {
     private static final int BREEDING_COOLDOWN = 3;
     private static final int STRENGTH = 4;
     private static final int INITIATIVE = 4;
-    private static final String NAME = "Owca";
-    private static final String CHARACTER = "O";
+    private static final String NAME = "Sheep";
+    private static final String CHARACTER = "S";
     private static final Color COLOR = new Color(180, 180, 180);
 
     public Sheep(){

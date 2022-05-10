@@ -16,6 +16,7 @@ public abstract class Organism implements Comparable<Organism>{
     protected int strength;
     protected String character;
     protected String speciesName;
+    protected String packageName;
     protected Point pos;
     protected int breedCooldown;
     protected int maxBreedCooldown;
@@ -173,5 +174,13 @@ public abstract class Organism implements Comparable<Organism>{
 
     public String save(){
         return speciesName + " " + pos.x + " " + pos.y + " " + breedCooldown + " " + strength + "\n";
+    }
+
+    public void load(String line){
+        String[] args = line.split(" ");
+        for(String arg : args)
+        {
+            System.out.println(arg);
+        }
     }
 }
