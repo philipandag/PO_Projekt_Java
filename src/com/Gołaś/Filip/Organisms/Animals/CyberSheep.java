@@ -9,7 +9,7 @@ public class CyberSheep extends Animal {
     private static final int BREEDING_COOLDOWN = 3;
     private static final int STRENGTH = 11;
     private static final int INITIATIVE = 4;
-    private static final String NAME = "CyberOwca";
+    public static final String NAME = "CyberOwca";
     private static final String CHARACTER = "#";
     private static final Color COLOR = new Color(50, 50, 50);
 
@@ -23,6 +23,6 @@ public class CyberSheep extends Animal {
 
     @Override
     public Organism clone() {
-        return new CyberSheep(world);
+        return new CyberSheep();
     }
 }

@@ -10,10 +10,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 
-public class Field extends JButton{
-    public Organism organism;
-    private World world;
+public class Field extends JButton implements Serializable {
+    public transient Organism organism;
+    private transient World world;
     private boolean empty;
     private Point pos;
     private Color EMPTY_COLOUR;
@@ -27,6 +28,9 @@ public class Field extends JButton{
         this.EMPTY_COLOUR = background;
         setBackground(EMPTY_COLOUR);
         setBorder(new EmptyBorder(0, 0, 0, 0));
+        addListener();
+    }
+    public void addListener(){
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -38,7 +42,6 @@ public class Field extends JButton{
             }
         });
     }
-
     public World getWorld(){
         return world;
     }

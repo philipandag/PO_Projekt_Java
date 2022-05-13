@@ -9,7 +9,7 @@ public class Sheep extends Animal {
     private static final int BREEDING_COOLDOWN = 3;
     private static final int STRENGTH = 4;
     private static final int INITIATIVE = 4;
-    private static final String NAME = "Sheep";
+    public static final String NAME = "Sheep";
     private static final String CHARACTER = "S";
     private static final Color COLOR = new Color(180, 180, 180);
 
@@ -23,6 +23,6 @@ public class Sheep extends Animal {
 
     @Override
     public Organism clone() {
-        return new Sheep(world);
+        return new Sheep();
     }
 }

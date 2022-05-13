@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class OrganismPopUp extends JPopupMenu {
@@ -29,9 +30,11 @@ public class OrganismPopUp extends JPopupMenu {
     }
 
     private void addOrganismItem(Organism o, JMenu menu){
+
         JMenuItem item = new JMenuItem(o.getSpeciesName());
         addListener(item, () -> {
             Organism clone = o.clone();
+            clone.setPos(field.getPos());
             System.out.println("\t# Postawiono " + o.getSpeciesName() + " na (" + field.getPos().x + ", " + field.getPos().y + ")");
             world.addOrganism(clone);
             field.setField(clone);
@@ -55,8 +58,8 @@ public class OrganismPopUp extends JPopupMenu {
         JMenuItem item;
         switch (mode){
             case ADD -> {
-                Organism[] animals = new Organism[]{new Antelope(world), new CyberSheep(world), new Human(world), new Sheep(world), new Tortoise(world), new Wolf(world)};
-                Organism[] plants = new Organism[]{new Belladonna(world), new Dandelion(world), new Grass(world), new Guarana(world), new PineBorscht(world)};
+                Organism[] animals = new Organism[]{new Antelope(), new CyberSheep(), new Human(), new Sheep(), new Tortoise(), new Wolf(), new Fox()};
+                Organism[] plants = new Organism[]{new Belladonna(), new Dandelion(), new Grass(), new Guarana(), new PineBorscht()};
 
                 JMenu animalsMenu = new JMenu("Zwierzeta");
                 for(Organism o : animals){

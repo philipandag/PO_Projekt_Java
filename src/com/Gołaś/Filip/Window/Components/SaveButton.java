@@ -8,10 +8,7 @@ import com.Gołaś.Filip.Window.GameWindow;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.event.ActionEvent;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class SaveButton extends JButton {
     World world;
@@ -24,16 +21,20 @@ public class SaveButton extends JButton {
         this.gameWindow = world.getWindow();
         addActionListener((ActionEvent e) -> {
             try {
-                BufferedWriter fw = new BufferedWriter(new FileWriter(saveFilePath));
+                FileOutputStream fos = new FileOutputStream(saveFilePath);
+                ObjectOutputStream out = new ObjectOutputStream(fos);
                 OrganismList organisms = world.getOrganisms();
+
+                out.writeObject(world.getBoard());
                 for(Organism o : organisms){
-                    fw.write(o.save());
+                    out.writeObject(o);
                 }
-                fw.flush();
-                fw.close();
+
+                out.close();
+                fos.close();
                 System.out.println("# Zapisano gre!");
-            }catch (java.io.IOException exception){
-                System.out.printf(exception.getMessage());
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         });
     }

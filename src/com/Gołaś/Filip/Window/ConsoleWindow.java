@@ -1,15 +1,15 @@
 package com.Gołaś.Filip.Window;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.awt.Color;
-import java.awt.Font;
 
 public class ConsoleWindow extends JFrame {
     public ConsoleWindow(){
         JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
         panel.setBackground(Color.BLACK);
         JTextArea textArea = new JTextArea(16, 64);
         textArea.setEditable(false);
@@ -26,7 +26,7 @@ public class ConsoleWindow extends JFrame {
             }
         }));
 
-        panel.add(scrollPane);
+        panel.add(scrollPane, BorderLayout.CENTER);
         add(panel);
         pack();
         setLocationRelativeTo(null);

@@ -9,7 +9,7 @@ public class Guarana extends Plant{
     private static final int BREEDING_COOLDOWN = 3;
     private static final double BREED_CHANCE = 0.1;
     private static final int STRENGTH = 0;
-    private static final String NAME = "Guarana";
+    public static final String NAME = "Guarana";
     private static final String CHARACTER = "G";
     private static final Color COLOR = new Color(255, 100, 80);
     private static final int STRENGTH_BONUS = 3;
@@ -25,7 +25,7 @@ public class Guarana extends Plant{
 
     @Override
     public Organism clone() {
-        return new Guarana(world);
+        return new Guarana();
     }
 
     @Override

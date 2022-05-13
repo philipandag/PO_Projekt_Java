@@ -31,7 +31,7 @@ public abstract class Animal<Species> extends Organism {
         }
         else
         {
-            System.out.println("\tROZMNAZANIE\t" + speciesName + " nie jest gotowy na rozmnazanie");
+            //System.out.println("\tROZMNAZANIE\t" + speciesName + " nie jest gotowy na rozmnazanie");
         }
     }
 }

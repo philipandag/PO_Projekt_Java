@@ -10,7 +10,7 @@ public class Tortoise extends Animal {
     private static final int BREEDING_COOLDOWN = 3;
     private static final int STRENGTH = 2;
     private static final int INITIATIVE = 1;
-    private static final String NAME = "Zolw";
+    public static final String NAME = "Zolw";
     private static final String CHARACTER = "Z";
     private static final Color COLOR = new Color(60, 80, 60);
     private static final int MINIMUM_ATTACKER_STRENGTH = 5;
@@ -26,7 +26,7 @@ public class Tortoise extends Animal {
 
     @Override
     public Organism clone() {
-        return new Tortoise(world);
+        return new Tortoise();
     }
 
     @Override

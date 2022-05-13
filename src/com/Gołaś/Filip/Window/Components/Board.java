@@ -5,14 +5,18 @@ import com.Gołaś.Filip.Game.World;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextLayout;
+import java.io.Serializable;
 
-public class Board extends JPanel {
-    private static final Dimension preferredSize = new Dimension(640, 640);
+public class Board extends JPanel implements Serializable {
+    private static transient final Dimension preferredSize = new Dimension(640, 640);
     protected Dimension size;
-    private World world;
+    private transient World world;
     private Field grid[][];
+
     public Board(Dimension size, World world){
-        setPreferredSize(preferredSize);
+        int min = Math.min(preferredSize.width/size.width, preferredSize.height/size.height);
+        setPreferredSize(new Dimension(min*size.width, min*size.height));
+        setBorder(BorderFactory.createLineBorder(Color.RED));
         this.world = world;
         this.size = size;
         this.grid = new Field[size.width][size.height];

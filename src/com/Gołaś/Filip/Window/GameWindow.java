@@ -16,7 +16,7 @@ public class GameWindow extends JFrame{
         world = new World(new Dimension(fieldsHorizontally, fieldsVertically), this);
         setLayout(new BorderLayout());
         gui = new Gui(world);
-        //gui.add(world.getBoard(), BorderLayout.CENTER);
+        gui.add(world.getBoard(), BorderLayout.CENTER);
         add(gui, BorderLayout.PAGE_START);
         add(world.getBoard());
 
@@ -26,5 +26,9 @@ public class GameWindow extends JFrame{
         setMinimumSize(getSize());
         setVisible(true);
         JFrame frame = this;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
     }
 }

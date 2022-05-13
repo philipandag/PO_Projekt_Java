@@ -11,7 +11,7 @@ public class PineBorscht extends Plant{
     private static final int BREEDING_COOLDOWN = 3;
     private static final double BREED_CHANCE = 0.1;
     private static final int STRENGTH = 10;
-    private static final String NAME = "BarszczSosnowskiego";
+    public static final String NAME = "BarszczSosnowskiego";
     private static final String CHARACTER = "B";
     private static final Color COLOR = new Color(255, 255, 0);
 
@@ -26,7 +26,7 @@ public class PineBorscht extends Plant{
 
     @Override
     public Organism clone() {
-        return new PineBorscht(world);
+        return new PineBorscht();
     }
 
     @Override

@@ -8,20 +8,19 @@ import com.Gołaś.Filip.Game.World;
 import java.awt.*;
 import java.util.Random;
 
-public abstract class Organism implements Comparable<Organism>{
-    protected World world;
-    protected Board board;
+public abstract class Organism implements Comparable<Organism>, java.io.Serializable{
+    protected transient World world;
+    protected transient Board board;
     protected Color color;
     protected int initiative;
     protected int strength;
     protected String character;
     protected String speciesName;
-    protected String packageName;
     protected Point pos;
     protected int breedCooldown;
     protected int maxBreedCooldown;
     protected boolean alive;
-    protected static final Randomiser randomiser = new Randomiser();
+    protected transient static final Randomiser randomiser = new Randomiser();
 
     public Organism(Color color, String character, String name, int initiative, int strength, int breedCooldown, int maxBreedCooldown){
         this.character = character;
@@ -41,7 +40,7 @@ public abstract class Organism implements Comparable<Organism>{
 
     public Organism setWorld(World w){
         this.world = w;
-        this.board = world.getBoard();
+        this.board = w.getBoard();
         return this;
     }
 
@@ -66,7 +65,8 @@ public abstract class Organism implements Comparable<Organism>{
     }
 
     public void fight(Organism attacker){
-        if(strength < attacker.getStrength()){
+        //System.out.println("Fight " + attacker.getSpeciesName() + "/" + attacker.getStrength() + " atakuje " + getSpeciesName() + "/" + getStrength());
+        if(getStrength() <= attacker.getStrength()){
             kill();
             attacker.moveTo(this.pos);
         }
@@ -83,9 +83,9 @@ public abstract class Organism implements Comparable<Organism>{
     public abstract Organism clone();
 
     public void moveTo(Point newPos){
+        System.out.println("\tRUCH\t" + speciesName + " idzie z (" + pos.x + ", " + pos.y + ") do (" + newPos.x + ", " + newPos.y + ")");
         if (board.onBoard(newPos)) {
             if(board.at(newPos).empty()) {
-                System.out.println("\tRUCH\t" + speciesName + " idzie z (" + pos.x + ", " + pos.y + ") do (" + newPos.x + ", " + newPos.y + ")");
                 board.at(pos).setField(null);
                 board.at(newPos).setField(this);
                 pos = newPos;
@@ -112,14 +112,14 @@ public abstract class Organism implements Comparable<Organism>{
             p.setLocation(pos.x + direction.getDx(), pos.y + direction.getDy());
             if (board.onBoard(p) && board.at(p).empty()) {
                 Organism child = clone();
+                child.setPos(p);
                 System.out.println("\tROZMNAZANIE\tRodzi sie " + child.getSpeciesName() + " na (" + p.x + ", " + p.y + ")");
                 world.addOrganism(child);
-                child.setAt(p);
                 return true;
             }
             direction = direction.next();
         }
-        System.out.println("\tROZMNAZANIE\t" + getSpeciesName() + " nie ma miejsca by przyjsc na swiat w poblizu (" + p.x + ", " + p.y + ")");
+        //System.out.println("\tROZMNAZANIE\t" + getSpeciesName() + " nie ma miejsca by przyjsc na swiat w poblizu (" + p.x + ", " + p.y + ")");
         return false;
     }
 

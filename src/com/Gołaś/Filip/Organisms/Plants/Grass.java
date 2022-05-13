@@ -9,7 +9,7 @@ public class Grass extends Plant{
     private static final int BREEDING_COOLDOWN = 3;
     private static final double BREED_CHANCE = 0.1;
     private static final int STRENGTH = 0;
-    private static final String NAME = "Trawa";
+    public static final String NAME = "Trawa";
     private static final String CHARACTER = "T";
     private static final Color COLOR = new Color(20, 80, 20);
 
@@ -24,6 +24,6 @@ public class Grass extends Plant{
 
     @Override
     public Organism clone() {
-        return new Grass(world);
+        return new Grass();
     }
 }

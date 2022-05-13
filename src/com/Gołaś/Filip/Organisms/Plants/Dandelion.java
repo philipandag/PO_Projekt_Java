@@ -9,7 +9,7 @@ public class Dandelion extends Plant{
     private static final int BREEDING_COOLDOWN = 3;
     private static final double BREED_CHANCE = 0.1;
     private static final int STRENGTH = 0;
-    private static final String NAME = "Mlecz";
+    public static final String NAME = "Mlecz";
     private static final String CHARACTER = "M";
     private static final Color COLOR = new Color(180, 255, 80);
     private static final int BREED_ATTEMPTS = 3;
@@ -25,7 +25,7 @@ public class Dandelion extends Plant{
 
     @Override
     public Organism clone() {
-        return new Dandelion(world);
+        return new Dandelion();
     }
 
     @Override

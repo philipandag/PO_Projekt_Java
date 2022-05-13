@@ -21,6 +21,12 @@ public abstract class Plant extends Organism{
     }
 
     @Override
+    public void collision(Organism attacker) {
+        super.collision(attacker);
+        fight(attacker);
+    }
+
+    @Override
     public void action() {
         breed();
         breedCooldownDown();
