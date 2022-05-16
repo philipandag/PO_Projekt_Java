@@ -32,7 +32,8 @@ public class Tortoise extends Animal {
     @Override
     public void action() {
         if(randomiser.chance(MOVE_CHANCE)) {
-            Direction k = Direction.randomise();
+        Direction k = new Direction();
+        k.randomise();
             moveTo(new Point(pos.x + k.getDx(), pos.y + k.getDy()));
         }
         breedCooldownDown();

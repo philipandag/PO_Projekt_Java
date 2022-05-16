@@ -21,7 +21,7 @@ public class OrganismPopUp extends JPopupMenu {
     }
 
     Mode mode;
-    Field field;
+    AbstractField field;
     JFrame window;
     World world;
 
@@ -30,7 +30,6 @@ public class OrganismPopUp extends JPopupMenu {
     }
 
     private void addOrganismItem(Organism o, JMenu menu){
-
         JMenuItem item = new JMenuItem(o.getSpeciesName());
         addListener(item, () -> {
             Organism clone = o.clone();
@@ -53,8 +52,8 @@ public class OrganismPopUp extends JPopupMenu {
 
     public OrganismPopUp(MouseEvent e, Mode mode) {
         this.mode = mode;
-        field = (Field) e.getComponent();
-        world = ((Field) e.getComponent()).getWorld();
+        field = (AbstractField) e.getComponent();
+        world = ((AbstractField) e.getComponent()).getWorld();
         JMenuItem item;
         switch (mode){
             case ADD -> {

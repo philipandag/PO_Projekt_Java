@@ -30,14 +30,18 @@ public class Fox extends Animal {
 
     @Override
     public void action() {
-        Direction k = Direction.randomise();
+        Direction k = new Direction();
+        k.randomise();
         Point p = new Point();
         for(int i = 0; i < Direction.SIZE; i++){
             p.setLocation(pos.x + k.getDx(), pos.y + k.getDy());
-            if(world.getBoard().at(p).empty() || world.getBoard().at(p).organism.getStrength() <= strength)
+            if(world.getBoard().onBoard(p))
             {
-                moveTo(new Point(pos.x + k.getDx(), pos.y + k.getDy()));
-                break;
+                if(world.getBoard().at(p).empty() || world.getBoard().at(p).organism.getStrength() <= strength)
+                {
+                    moveTo(new Point(pos.x + k.getDx(), pos.y + k.getDy()));
+                    break;
+                }
             }
             k = k.next();
         }

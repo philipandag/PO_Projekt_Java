@@ -7,28 +7,25 @@ import com.Gołaś.Filip.Window.GameWindow;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
 
 public class SaveButton extends JButton {
-    World world;
     GameWindow gameWindow;
     String saveFilePath;
-    SaveButton(World world, String saveFilePath){
+    SaveButton(GameWindow window, String saveFilePath){
         super("Zapisz");
         this.saveFilePath = saveFilePath;
-        this.world = world;
-        this.gameWindow = world.getWindow();
+        this.gameWindow = window;
         addActionListener((ActionEvent e) -> {
             try {
+                new FileOutputStream(saveFilePath).close();
                 FileOutputStream fos = new FileOutputStream(saveFilePath);
                 ObjectOutputStream out = new ObjectOutputStream(fos);
-                OrganismList organisms = world.getOrganisms();
+                OrganismList organisms = window.getWorld().getOrganisms();
 
-                out.writeObject(world.getBoard());
-                for(Organism o : organisms){
-                    out.writeObject(o);
-                }
+                out.writeObject(window.getWorld());
 
                 out.close();
                 fos.close();

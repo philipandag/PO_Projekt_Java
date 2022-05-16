@@ -1,11 +1,14 @@
 package com.Gołaś.Filip.Organisms.Animals;
 
 import com.Gołaś.Filip.Game.Direction;
+import com.Gołaś.Filip.Listeners.HumanInputListener;
 import com.Gołaś.Filip.Organisms.Organism;
 import com.Gołaś.Filip.Game.World;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Human extends Animal {
     private static final int BREEDING_COOLDOWN = 3;
@@ -15,7 +18,7 @@ public class Human extends Animal {
     private static final String CHARACTER = "C";
     private static final Color COLOR = new Color(150, 50, 255);
     private static final int MAX_SKILL_COOLDOWN = 5;
-    private Direction direction;
+    private final Direction direction = new Direction();
     private int skillCooldown;
     private int bonusStrength;
 
@@ -26,11 +29,9 @@ public class Human extends Animal {
 
     public Human(){
         super(COLOR, CHARACTER, NAME, INITIATIVE, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN);
-        direction = Direction.N;
         skillCooldown = 0;
         bonusStrength = 0;
     }
-
 
     @Override
     public void action(){
@@ -44,25 +45,28 @@ public class Human extends Animal {
         return new Human();
     }
 
+
+
     @Override
     public Organism setWorld(World w) {
         super.setWorld(w);
+
         w.addHumanDirectionListener((KeyEvent keyEvent) -> {
-            switch(keyEvent.getKeyCode()){
+            switch (keyEvent.getKeyCode()) {
                 case KeyEvent.VK_DOWN -> {
-                    direction =  Direction.S;
+                    setDirectionValue(Direction.Value.S);
                 }
                 case KeyEvent.VK_LEFT -> {
-                    direction = Direction.W;
+                    setDirectionValue(Direction.Value.W);
                 }
                 case KeyEvent.VK_RIGHT -> {
-                    direction = Direction.E;
+                    setDirectionValue(Direction.Value.E);
                 }
                 case KeyEvent.VK_UP -> {
-                    direction = Direction.N;
+                    setDirectionValue(Direction.Value.N);
                 }
                 case KeyEvent.VK_SPACE -> {
-                    if (skillCooldown == 0) {
+                    if (getSkillCooldown() == 0) {
                         useSkill();
                         System.out.println("\tUMIEJETNOSC\tCzlowiek uzywa magicznej mikstury!");
                     } else {
@@ -90,4 +94,17 @@ public class Human extends Animal {
     public int getStrength(){
         return strength + bonusStrength;
     }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirectionValue(Direction.Value d){
+        this.direction.set(d);
+    }
+
+    public int getSkillCooldown() {
+        return skillCooldown;
+    }
+
 }

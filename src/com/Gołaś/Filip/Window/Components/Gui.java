@@ -2,6 +2,7 @@ package com.Gołaś.Filip.Window.Components;
 
 import com.Gołaś.Filip.Game.Direction;
 import com.Gołaś.Filip.Game.World;
+import com.Gołaś.Filip.Window.GameWindow;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -9,20 +10,24 @@ import java.awt.*;
 
 public class Gui extends JPanel {
     private static final String SAVE_FILE_PATH = "zapis.zwierzaki";
-    World world;
+    GameWindow window;
     HumanInputIndicator hdi;
-    public Gui(World world){
-        this.world = world;
+    public Gui(GameWindow window){
+        this.window = window;
         setLayout(new BorderLayout(3, 3));
         setBorder(new EmptyBorder(5, 5, 5, 5));
         JToolBar tools = new JToolBar();
         tools.setFloatable(false);
         add(tools, BorderLayout.PAGE_START);
-        tools.add(new NextTurnButton(world));
-        tools.add(new SaveButton(world, SAVE_FILE_PATH));
-        tools.add(new LoadButton(world, SAVE_FILE_PATH));
-        hdi = new HumanInputIndicator(Direction.N, world.getWindow());
-        tools.add(hdi);
-        world.addHumanDirectionListener(hdi);
+        tools.add(new NextTurnButton(window));
+        tools.add(new SaveButton(window, SAVE_FILE_PATH));
+        tools.add(new LoadButton(window, SAVE_FILE_PATH));
+        //hdi = new HumanInputIndicator(new Direction(Direction.Value.N), window);
+        //tools.add(hdi);
+        //addHumanDirectionListener();
+    }
+
+    public void addHumanDirectionListener(){
+        window.getWorld().addHumanDirectionListener(hdi);
     }
 }

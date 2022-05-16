@@ -32,12 +32,14 @@ public class PineBorscht extends Plant{
     @Override
     public void action() {
         Point point = new Point();
-        for(Direction d : Direction.values())
+        Direction d = new Direction(Direction.Value.N);
+        for(int i = 0; i < Direction.SIZE; i++)
         {
             point.setLocation(pos.x + d.getDx(), pos.y + d.getDy());
             if(board.onBoard(point) && !board.at(point).empty() && !(board.at(point).organism instanceof PineBorscht) && !(board.at(point).organism instanceof CyberSheep)){
                 board.at(point).organism.kill();
             }
+            d.next();
         }
         super.action();
     }

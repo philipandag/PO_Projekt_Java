@@ -1,16 +1,18 @@
 package com.Gołaś.Filip.Window.Components;
 
 import com.Gołaś.Filip.Game.World;
+import com.Gołaś.Filip.Window.GameWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class NextTurnButton extends JButton {
-    World world;
-    public NextTurnButton(World world) {
+    GameWindow window;
+    public NextTurnButton(GameWindow window) {
         super("Nastepna Tura");
+        this.window = window;
         addActionListener((ActionEvent e) -> {
-                world.nextTurn();
+                window.getWorld().nextTurn();
         });
     }
 }

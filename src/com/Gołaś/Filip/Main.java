@@ -9,7 +9,7 @@ public class Main {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                new TestWindow(20,20);
+                new GameWindow(10,10);
             }
         };
         SwingUtilities.invokeLater(r);

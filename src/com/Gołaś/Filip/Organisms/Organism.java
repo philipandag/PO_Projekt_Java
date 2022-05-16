@@ -1,6 +1,7 @@
 package com.Gołaś.Filip.Organisms;
 
 import com.Gołaś.Filip.Game.Randomiser;
+import com.Gołaś.Filip.Window.Components.AbstractBoard;
 import com.Gołaś.Filip.Window.Components.Board;
 import com.Gołaś.Filip.Game.Direction;
 import com.Gołaś.Filip.Game.World;
@@ -9,8 +10,8 @@ import java.awt.*;
 import java.util.Random;
 
 public abstract class Organism implements Comparable<Organism>, java.io.Serializable{
-    protected transient World world;
-    protected transient Board board;
+    protected World world;
+    protected AbstractBoard board;
     protected Color color;
     protected int initiative;
     protected int strength;
@@ -20,7 +21,7 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
     protected int breedCooldown;
     protected int maxBreedCooldown;
     protected boolean alive;
-    protected transient static final Randomiser randomiser = new Randomiser();
+    protected static final Randomiser randomiser = new Randomiser();
 
     public Organism(Color color, String character, String name, int initiative, int strength, int breedCooldown, int maxBreedCooldown){
         this.character = character;
@@ -59,7 +60,8 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
     }
 
     public void action(){
-        Direction k = Direction.randomise();
+        Direction k = new Direction();
+        k.randomise();
         moveTo(new Point(pos.x + k.getDx(), pos.y + k.getDy()));
         breedCooldownDown();
     }
@@ -83,14 +85,13 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
     public abstract Organism clone();
 
     public void moveTo(Point newPos){
-        System.out.println("\tRUCH\t" + speciesName + " idzie z (" + pos.x + ", " + pos.y + ") do (" + newPos.x + ", " + newPos.y + ")");
         if (board.onBoard(newPos)) {
+            System.out.println("\tRUCH\t" + speciesName + " idzie z (" + pos.x + ", " + pos.y + ") do (" + newPos.x + ", " + newPos.y + ")");
             if(board.at(newPos).empty()) {
                 board.at(pos).setField(null);
                 board.at(newPos).setField(this);
                 pos = newPos;
-            }
-            else{
+            } else {
                 board.at(newPos).organism.collision(this);
             }
         }
@@ -106,7 +107,8 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
     }
 
     public boolean forceReproduce(){
-        Direction direction = Direction.randomise();
+        Direction direction = new Direction();
+        direction.randomise();
         Point p = new Point();
         for (int i = 0; i < Direction.SIZE; i++) {
             p.setLocation(pos.x + direction.getDx(), pos.y + direction.getDy());
@@ -172,15 +174,7 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
         strength += delta;
     }
 
-    public String save(){
-        return speciesName + " " + pos.x + " " + pos.y + " " + breedCooldown + " " + strength + "\n";
-    }
-
-    public void load(String line){
-        String[] args = line.split(" ");
-        for(String arg : args)
-        {
-            System.out.println(arg);
-        }
+    public void setBoard(AbstractBoard board) {
+        this.board = board;
     }
 }

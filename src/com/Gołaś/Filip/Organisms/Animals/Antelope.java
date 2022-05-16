@@ -30,7 +30,8 @@ public class Antelope extends Animal {
 
     @Override
     public void action() {
-        Direction k = Direction.randomise();
+        Direction k = new Direction();
+        k.randomise();
         moveTo(new Point(pos.x + 2 * k.getDx(), pos.y + 2 * k.getDy()));
         breedCooldownDown();
     }
@@ -46,7 +47,8 @@ public class Antelope extends Animal {
     }
 
     protected void escape(){
-        Direction d = Direction.randomise();
+        Direction d = new Direction();
+        d.randomise();
         Point p = new Point();
         for (int i = 0; i < Direction.SIZE; i++) {
             p.setLocation(pos.x + d.getDx(), pos.y + d.getDy());
