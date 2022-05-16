@@ -16,7 +16,7 @@ public class PineBorscht extends Plant{
     private static final Color COLOR = new Color(255, 255, 0);
 
     public PineBorscht(){
-        super(COLOR, CHARACTER, NAME, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN, BREED_CHANCE);
+        super(COLOR, CHARACTER, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN, BREED_CHANCE);
     }
 
     public PineBorscht(World world){
@@ -24,10 +24,6 @@ public class PineBorscht extends Plant{
         setWorld(world);
     }
 
-    @Override
-    public Organism clone() {
-        return new PineBorscht();
-    }
 
     @Override
     public void action() {

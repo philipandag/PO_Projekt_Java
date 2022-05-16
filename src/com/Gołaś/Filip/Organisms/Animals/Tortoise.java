@@ -10,7 +10,6 @@ public class Tortoise extends Animal {
     private static final int BREEDING_COOLDOWN = 3;
     private static final int STRENGTH = 2;
     private static final int INITIATIVE = 1;
-    public static final String NAME = "Zolw";
     private static final String CHARACTER = "Z";
     private static final Color COLOR = new Color(60, 80, 60);
     private static final int MINIMUM_ATTACKER_STRENGTH = 5;
@@ -21,13 +20,9 @@ public class Tortoise extends Animal {
         setWorld(world);
     }
     public Tortoise(){
-        super(COLOR, CHARACTER, NAME, INITIATIVE, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN);
+        super(COLOR, CHARACTER, INITIATIVE, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN);
     }
 
-    @Override
-    public Organism clone() {
-        return new Tortoise();
-    }
 
     @Override
     public void action() {

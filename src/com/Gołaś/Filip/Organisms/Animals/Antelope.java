@@ -16,18 +16,13 @@ public class Antelope extends Animal {
     private static final double ESCAPE_CHANCE = 0.5;
 
     public Antelope(){
-        super(COLOR, CHARACTER, NAME, INITIATIVE, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN);
+        super(COLOR, CHARACTER, INITIATIVE, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN);
     }
     public Antelope(World world){
        this();
        setWorld(world);
     }
-
-    @Override
-    public Organism clone() {
-        return new Antelope();
-    }
-
+    
     @Override
     public void action() {
         Direction k = new Direction();

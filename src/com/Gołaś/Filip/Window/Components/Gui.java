@@ -22,9 +22,6 @@ public class Gui extends JPanel {
         tools.add(new NextTurnButton(window));
         tools.add(new SaveButton(window, SAVE_FILE_PATH));
         tools.add(new LoadButton(window, SAVE_FILE_PATH));
-        //hdi = new HumanInputIndicator(new Direction(Direction.Value.N), window);
-        //tools.add(hdi);
-        //addHumanDirectionListener();
     }
 
     public void addHumanDirectionListener(){

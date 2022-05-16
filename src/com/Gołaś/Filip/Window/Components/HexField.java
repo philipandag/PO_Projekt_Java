@@ -2,12 +2,9 @@ package com.Gołaś.Filip.Window.Components;
 
 import com.Gołaś.Filip.Game.World;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.io.Serializable;
 
-public class HexField extends AbstractField {
+public class HexField extends Field {
     private static final double sqrt3 = Math.sqrt(3);
     private Polygon polygon;
     private int sideLength;

@@ -1,20 +1,16 @@
 package com.Gołaś.Filip.Game;
 
 import com.Gołaś.Filip.Listeners.HumanInputListener;
-import com.Gołaś.Filip.Listeners.KeyboardListener;
-import com.Gołaś.Filip.Organisms.Animals.Human;
 import com.Gołaś.Filip.Organisms.Organism;
 import com.Gołaś.Filip.Window.Components.*;
 import com.Gołaś.Filip.Window.GameWindow;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import java.awt.event.KeyEvent;
-import java.util.ListIterator;
 
 public class World implements Serializable {
 
@@ -43,8 +39,8 @@ public class World implements Serializable {
     }
 
     public void repairRefsInBoard() {
-        for(AbstractField row[] : board.getGrid()){
-            for(AbstractField f : row){
+        for(Field row[] : board.getGrid()){
+            for(Field f : row){
                 f.setWorld(this);
                 f.addListener();
             }
@@ -86,7 +82,7 @@ public class World implements Serializable {
         return board;
     }
 
-    public AbstractField[][] getBoardGrid(){
+    public Field[][] getBoardGrid(){
         return board.getGrid();
     }
 

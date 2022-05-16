@@ -5,10 +5,10 @@ import java.io.File;
 
 public class FileSaver extends JFileChooser {
 
-    private JFrame parent;
+    private JFrame window;
 
     public FileSaver(JFrame parent){
-        this.parent = parent;
+        this.window = parent;
     }
     @Override
     public void approveSelection() {
@@ -16,7 +16,7 @@ public class FileSaver extends JFileChooser {
         if(getDialogType() == SAVE_DIALOG){
             if(f.exists())
             {
-                int result = JOptionPane.showConfirmDialog(parent, "The file exists, overwrite?", "Existing file", JOptionPane.YES_NO_CANCEL_OPTION);
+                int result = JOptionPane.showConfirmDialog(window, "The file exists, overwrite?", "Existing file", JOptionPane.YES_NO_CANCEL_OPTION);
 
                 switch(result){
                     case JOptionPane.YES_OPTION:

@@ -9,7 +9,6 @@ public class Wolf extends Animal {
     private static final int BREEDING_COOLDOWN = 3;
     private static final int STRENGTH = 9;
     private static final int INITIATIVE = 5;
-    public static final String NAME = "Wilk";
     private static final String CHARACTER = "W";
     private static final Color COLOR = new Color(100, 100, 100);
 
@@ -18,7 +17,7 @@ public class Wolf extends Animal {
         setWorld(world);
     }
     public Wolf(){
-        super(COLOR, CHARACTER, NAME, INITIATIVE, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN);
+        super(COLOR, CHARACTER, INITIATIVE, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN);
     }
 
     @Override
@@ -26,9 +25,5 @@ public class Wolf extends Animal {
 
     }
 
-    @Override
-    public Organism clone() {
-        return new Wolf();
-    }
     public static Wolf clone(World w) { return new Wolf(w);}
 }

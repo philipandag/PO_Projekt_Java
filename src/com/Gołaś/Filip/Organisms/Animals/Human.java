@@ -14,7 +14,6 @@ public class Human extends Animal {
     private static final int BREEDING_COOLDOWN = 3;
     private static final int STRENGTH = 5;
     private static final int INITIATIVE = 40;
-    public static final String NAME = "Czlowiek";
     private static final String CHARACTER = "C";
     private static final Color COLOR = new Color(150, 50, 255);
     private static final int MAX_SKILL_COOLDOWN = 5;
@@ -28,7 +27,7 @@ public class Human extends Animal {
     }
 
     public Human(){
-        super(COLOR, CHARACTER, NAME, INITIATIVE, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN);
+        super(COLOR, CHARACTER, INITIATIVE, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN);
         skillCooldown = 0;
         bonusStrength = 0;
     }
@@ -39,13 +38,6 @@ public class Human extends Animal {
         breedCooldownDown();
         skillCooldownDown();
     }
-
-    @Override
-    public Organism clone() {
-        return new Human();
-    }
-
-
 
     @Override
     public Organism setWorld(World w) {

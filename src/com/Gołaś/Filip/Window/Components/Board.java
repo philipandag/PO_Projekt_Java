@@ -2,9 +2,7 @@ package com.Gołaś.Filip.Window.Components;
 
 import com.Gołaś.Filip.Game.World;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.font.TextLayout;
 import java.io.Serializable;
 
 public class Board extends AbstractBoard implements Serializable {
@@ -36,7 +34,7 @@ public class Board extends AbstractBoard implements Serializable {
     }
 
     @Override
-    public AbstractField[][] createGrid(){
+    public Field[][] createGrid(){
         return new Field[size.width][size.height];
     }
 

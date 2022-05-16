@@ -6,17 +6,17 @@ import com.Gołaś.Filip.Game.World;
 
 import java.awt.*;
 
-public abstract class Animal<Species> extends Organism {
-    public Animal(Color color, String character, String name, int initiative, int strength, int breedCooldown, int maxBreedCooldown, World world){
-        super(color, character, name, initiative, strength, breedCooldown, maxBreedCooldown, world);
+public abstract class Animal extends Organism {
+    protected Animal(Color color, String character, int initiative, int strength, int breedCooldown, int maxBreedCooldown, World world){
+        super(color, character, initiative, strength, breedCooldown, maxBreedCooldown, world);
     }
-    public Animal(Color color, String character, String name, int initiative, int strength, int breedCooldown, int maxBreedCooldown){
-        super(color, character, name, initiative, strength, breedCooldown, maxBreedCooldown);
+    protected Animal(Color color, String character, int initiative, int strength, int breedCooldown, int maxBreedCooldown){
+        super(color, character, initiative, strength, breedCooldown, maxBreedCooldown);
     }
-
+    @Override
     public void collision(Organism attacker){
         super.collision(attacker);
-        if(speciesName == attacker.getSpeciesName()){
+        if(getName() == attacker.getName()){
             breedWith(attacker);
         }
         else {
@@ -28,10 +28,6 @@ public abstract class Animal<Species> extends Organism {
         if(readyToBreed() && attacker.readyToBreed()) {
             forceReproduce();
             resetBreedCooldown();
-        }
-        else
-        {
-            //System.out.println("\tROZMNAZANIE\t" + speciesName + " nie jest gotowy na rozmnazanie");
         }
     }
 }

@@ -10,7 +10,6 @@ public class Fox extends Animal {
     private static final int BREEDING_COOLDOWN = 3;
     private static final int STRENGTH = 3;
     private static final int INITIATIVE = 7;
-    public static final String NAME = "Lis";
     private static final String CHARACTER = "L";
     private static final Color COLOR = new Color(120, 50, 20);
 
@@ -19,13 +18,9 @@ public class Fox extends Animal {
         setWorld(world);
     }
     public Fox(){
-        super(COLOR, CHARACTER, NAME, INITIATIVE, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN);
+        super(COLOR, CHARACTER, INITIATIVE, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN);
     }
 
-    @Override
-    public Organism clone() {
-        return new Fox();
-    }
     public static Fox clone(World w) { return new Fox(w);}
 
     @Override

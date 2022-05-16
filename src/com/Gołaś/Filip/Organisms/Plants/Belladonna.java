@@ -9,7 +9,6 @@ public class Belladonna extends Plant{
     private static final int BREEDING_COOLDOWN = 3;
     private static final double BREED_CHANCE = 0.1;
     private static final int STRENGTH = 99;
-    public static final String NAME = "WilczaJagoda";
     private static final String CHARACTER = "J";
     private static final Color COLOR = new Color(120, 0, 0);
 
@@ -19,12 +18,7 @@ public class Belladonna extends Plant{
     }
 
     public Belladonna(){
-        super(COLOR, CHARACTER, NAME, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN, BREED_CHANCE);
-    }
-
-    @Override
-    public Organism clone() {
-        return new Belladonna();
+        super(COLOR, CHARACTER, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN, BREED_CHANCE);
     }
 
     @Override

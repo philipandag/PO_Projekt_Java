@@ -26,10 +26,10 @@ public class LoadButton extends JButton {
                 try{
                     window.getWorld().removeKeyEventDispatcher();
                     World world = (World) in.readObject();
-                    world.getHumanInputListeners().clear();
+                    //world.getHumanInputListeners().clear();
                     world.addKeyEventDispatcher();
-                    world.repairRefsInBoard();
-                    world.repairRefsInOrganisms();
+                    //world.repairRefsInBoard();
+                    //world.repairRefsInOrganisms();
                     world.setWindow(window);
                     window.setWorld(world);
                     window.setBoard(world.getBoard());
