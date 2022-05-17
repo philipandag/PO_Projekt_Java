@@ -52,15 +52,30 @@ public class Direction implements Serializable {
     }
 
     public int getDx(){
-        return (this.value == Value.E || this.value == Value.NE || this.value == Value.SE)? 1 :
-                (this.value == Value.W || this.value == Value.NW || this.value == Value.SW) ? -1 :
-                        0;
+        return (this.value == Value.E || this.value == Value.NE || this.value == Value.SE) ? 1 :
+         (this.value == Value.W || this.value == Value.NW || this.value == Value.SW) ? -1 :
+        0;
     }
+//    public int getDx(){
+//        if(this.value == Value.E || this.value == Value.NE || this.value == Value.SE)
+//            return 1;
+//        if (this.value == Value.W || this.value == Value.NW || this.value == Value.SW)
+//            return -1;
+//        return 0;
+//    }
+
     public int getDy(){
-        return (this.value == Value.N || this.value == Value.NW || this.value == Value.NE)? -1 :
-                (this.value == Value.S || this.value == Value.SW || this.value == Value.SE) ? 1 :
-                        0;
+        return (this.value == Value.N || this.value == Value.NW || this.value == Value.NE) ? -1 :
+        (this.value == Value.S || this.value == Value.SW || this.value == Value.SE) ? 1 :
+          0;
     }
+//    public int getDy(){
+//        if(this.value == Value.N || this.value == Value.NW || this.value == Value.NE)
+//            return -1;
+//        if(this.value == Value.S || this.value == Value.SW || this.value == Value.SE)
+//            return 1;
+//        return 0;
+//    }
 
     public Direction next(){
         if(mode==Mode.NORMAL)

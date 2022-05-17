@@ -7,45 +7,31 @@ import com.Gołaś.Filip.Organisms.Organism;
 import com.Gołaś.Filip.Window.GameWindow;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 
 public class LoadButton extends JButton {
     GameWindow window;
     String saveFilePath;
     LoadButton(GameWindow window, String saveFilePath){
-        super("Wczytaj");
+        super("Load");
         this.window = window;
         this.saveFilePath = saveFilePath;
         addActionListener((ActionEvent e) -> {
             try {
                 FileInputStream fileIn = new FileInputStream(saveFilePath);
                 ObjectInputStream in = new ObjectInputStream(fileIn);
-                try{
-                    window.getWorld().removeKeyEventDispatcher();
-                    World world = (World) in.readObject();
-                    //world.getHumanInputListeners().clear();
-                    world.addKeyEventDispatcher();
-                    //world.repairRefsInBoard();
-                    //world.repairRefsInOrganisms();
-                    world.setWindow(window);
-                    window.setWorld(world);
-                    window.setBoard(world.getBoard());
-                }catch(IOException exception)
-                {
-                    System.out.println(exception.getMessage());
-                }
+
+                World world = (World) in.readObject();
+                window.setWorld(world);
+
+                String consoleContent = (String) in.readObject();
+                window.getConsoleWindow().setText(consoleContent);
 
                 in.close();
                 fileIn.close();
-                System.out.println("# Wczytano Gre!");
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (ClassNotFoundException ex) {
+                System.out.println("# Game loaded!");
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
 

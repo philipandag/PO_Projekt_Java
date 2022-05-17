@@ -22,6 +22,7 @@ public class Gui extends JPanel {
         tools.add(new NextTurnButton(window));
         tools.add(new SaveButton(window, SAVE_FILE_PATH));
         tools.add(new LoadButton(window, SAVE_FILE_PATH));
+        tools.add(new NewGameButton(window));
     }
 
     public void addHumanDirectionListener(){

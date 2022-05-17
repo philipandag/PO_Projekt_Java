@@ -29,6 +29,8 @@ public class FileSaver extends JFileChooser {
                     case JOptionPane.CANCEL_OPTION:
                         cancelSelection();
                         return;
+                    default:
+                        return;
                 }
             }
             else

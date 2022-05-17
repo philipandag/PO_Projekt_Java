@@ -8,6 +8,7 @@ import com.Gołaś.Filip.Game.World;
 
 import java.awt.*;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public abstract class Organism implements Comparable<Organism>, java.io.Serializable{
@@ -23,7 +24,7 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
     protected boolean alive;
     protected static final Randomiser randomiser = new Randomiser();
 
-    public Organism(Color color, String character, int initiative, int strength, int breedCooldown, int maxBreedCooldown){
+    protected Organism(Color color, String character, int initiative, int strength, int breedCooldown, int maxBreedCooldown){
         this.character = character;
         this.color = color;
         this.initiative = initiative;
@@ -33,7 +34,7 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
         this.alive = true;
     }
 
-    public Organism(Color color, String character, int initiative, int strength, int breedCooldown, int maxBreedCooldown,  World world){
+    protected Organism(Color color, String character, int initiative, int strength, int breedCooldown, int maxBreedCooldown,  World world){
         this(color, character, initiative, strength, breedCooldown, maxBreedCooldown);
         this.world = world;
     }
@@ -48,6 +49,7 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
     public int compareTo(Organism o) {
         return initiative - o.initiative;
     }
+    
     public Color getColor(){
         return color;
     }
@@ -66,7 +68,6 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
     }
 
     public void fight(Organism attacker){
-        //System.out.println("Fight " + attacker.getSpeciesName() + "/" + attacker.getStrength() + " atakuje " + getSpeciesName() + "/" + getStrength());
         if(getStrength() <= attacker.getStrength()){
             kill();
             attacker.moveTo(this.pos);
@@ -89,7 +90,7 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
                 board.at(newPos).setField(this);
                 pos = newPos;
             } else {
-                board.at(newPos).organism.collision(this);
+                board.at(newPos).getOrganism().collision(this);
             }
         }
     }
@@ -97,7 +98,7 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
     public void setAt(Point newPos){
         if (board.onBoard(newPos)) {
             if(!board.at(newPos).empty())
-                world.deleteOrganism(board.at(newPos).organism);
+                world.deleteOrganism(board.at(newPos).getOrganism());
             board.at(newPos).setField(this);
             pos = newPos;
         }
@@ -118,17 +119,16 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
             }
             direction = direction.next();
         }
-        //System.out.println("\tROZMNAZANIE\t" + getSpeciesName() + " nie ma miejsca by przyjsc na swiat w poblizu (" + p.x + ", " + p.y + ")");
         return false;
     }
 
     public Organism clone(){
-        Organism child;
+        Organism child = null;
         try {
             Constructor<? extends Organism> constructor = this.getClass().getConstructor(World.class);
             child = constructor.newInstance(this.world);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return child;
     }

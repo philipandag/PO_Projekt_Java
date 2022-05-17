@@ -16,7 +16,7 @@ public abstract class Animal extends Organism {
     @Override
     public void collision(Organism attacker){
         super.collision(attacker);
-        if(getName() == attacker.getName()){
+        if(getName().equals(attacker.getName())){
             breedWith(attacker);
         }
         else {

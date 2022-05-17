@@ -4,7 +4,6 @@ import com.Gołaś.Filip.Organisms.Organism;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
-import java.util.Vector;
 
 public class OrganismList extends ArrayList<Organism> {
     @Override

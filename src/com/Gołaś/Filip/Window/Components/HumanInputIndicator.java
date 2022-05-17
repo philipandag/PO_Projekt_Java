@@ -35,19 +35,12 @@ public class HumanInputIndicator extends JPanel implements HumanInputListener {
     @Override
     public void execute(KeyEvent keyEvent) {
         switch (keyEvent.getKeyCode()){
-            case KeyEvent.VK_DOWN -> {
-                humanDirection.value = Direction.Value.S;
-            }
-            case KeyEvent.VK_LEFT -> {
-                humanDirection.value = Direction.Value.W;
-            }
-            case KeyEvent.VK_RIGHT -> {
-                humanDirection.value = Direction.Value.E;
-            }
-            case KeyEvent.VK_UP -> {
-                humanDirection.value = Direction.Value.N;
-            }
-        }
+            case KeyEvent.VK_DOWN -> humanDirection.value = Direction.Value.S;
+            case KeyEvent.VK_LEFT -> humanDirection.value = Direction.Value.W;
+            case KeyEvent.VK_RIGHT -> humanDirection.value = Direction.Value.E;
+            case KeyEvent.VK_UP -> humanDirection.value = Direction.Value.N;
+            default -> {return;}
+        };
         direction.setText(humanDirection.toString());
     }
 }

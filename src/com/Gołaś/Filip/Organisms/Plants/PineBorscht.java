@@ -32,8 +32,8 @@ public class PineBorscht extends Plant{
         for(int i = 0; i < Direction.SIZE; i++)
         {
             point.setLocation(pos.x + d.getDx(), pos.y + d.getDy());
-            if(board.onBoard(point) && !board.at(point).empty() && !(board.at(point).organism instanceof PineBorscht) && !(board.at(point).organism instanceof CyberSheep)){
-                board.at(point).organism.kill();
+            if(board.onBoard(point) && !board.at(point).empty() && !(board.at(point).getOrganism() instanceof PineBorscht) && !(board.at(point).getOrganism() instanceof CyberSheep)){
+                board.at(point).getOrganism().kill();
             }
             d.next();
         }

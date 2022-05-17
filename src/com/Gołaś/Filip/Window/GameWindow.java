@@ -17,20 +17,23 @@ public class GameWindow extends JFrame{
         world = new World(new Dimension(fieldsHorizontally, fieldsVertically), this, World.BoardType.HEX);
         setLayout(new BorderLayout());
         gui = new Gui(this);
-        //gui.add(world.getBoard(), BorderLayout.CENTER);
         add(gui, BorderLayout.PAGE_START);
         add(world.getBoard(), BorderLayout.CENTER);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         pack();
         setMinimumSize(getSize());
         setVisible(true);
-        JFrame frame = this;
     }
 
-    public void setWorld(World world) {
-        this.world = world;
+    public void setWorld(World newWorld) {
+        consoleWindow.reset();
+        this.world.removeKeyEventDispatcher();
+        this.world = newWorld;
+        this.world.addKeyEventDispatcher();
+        this.world.setWindow(this);
+        setBoard(world.getBoard());
     }
 
     public World getWorld() {
@@ -49,5 +52,9 @@ public class GameWindow extends JFrame{
 
     public Gui getGui() {
         return gui;
+    }
+
+    public ConsoleWindow getConsoleWindow() {
+        return consoleWindow;
     }
 }

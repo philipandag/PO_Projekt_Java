@@ -7,7 +7,6 @@ import com.Gołaś.Filip.Game.World;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 public class OrganismPopUp extends JPopupMenu {
@@ -21,9 +20,10 @@ public class OrganismPopUp extends JPopupMenu {
     JFrame window;
     World world;
 
-    private interface itemAdder{
+    private interface ItemAdder{
         public void addItem();
     }
+
     private JMenu createMenu(Class<? extends Organism>[] classes, String name){
         JMenu menu = new JMenu(name);
         for(Class<? extends Organism> c : classes){
@@ -31,11 +31,12 @@ public class OrganismPopUp extends JPopupMenu {
         }
         return menu;
     }
+
     private <T extends Organism> void addOrganismItem(Class<T> c, JMenu menu){
         JMenuItem item = new JMenuItem(c.getSimpleName());
         addListener(item, () -> {
             try {
-                Organism clone = c.getConstructor(World.class).newInstance(this.world);
+                Organism clone = c.getConstructor().newInstance();
                 clone.setPos(field.getPos());
                 System.out.println("\t# Placed " + clone.getSpeciesName() + " on (" + field.getPos().x + ", " + field.getPos().y + ")");
                 world.addOrganism(clone);
@@ -47,13 +48,8 @@ public class OrganismPopUp extends JPopupMenu {
         menu.add(item);
     }
 
-    private void addListener(JMenuItem item, itemAdder adder){
-        item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                adder.addItem();
-            }
-        });
+    private void addListener(JMenuItem item, ItemAdder adder){
+        item.addActionListener((ActionEvent e) -> adder.addItem());
     }
 
     public OrganismPopUp(MouseEvent e, Mode mode) {
@@ -82,14 +78,7 @@ public class OrganismPopUp extends JPopupMenu {
                 add(item);
             }
         }
-
         show(e.getComponent(), e.getX(), e.getY());
     }
-
-
-    public void setPole(Field field){
-        this.field = field;
-    }
-
 }
 

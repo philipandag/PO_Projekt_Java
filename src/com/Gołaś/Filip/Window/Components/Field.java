@@ -11,11 +11,11 @@ import java.awt.event.MouseEvent;
 import java.io.Serializable;
 
 public class Field extends JButton implements Serializable {
-    public Organism organism;
+    protected Organism organism;
     protected World world;
     protected boolean empty;
     protected Point pos;
-    protected Color EMPTY_COLOUR;
+    protected Color emptyColour;
     protected Dimension preferredSize = new Dimension(32, 32);
 
     public Field(Color background, World world, Point pos) {
@@ -23,13 +23,16 @@ public class Field extends JButton implements Serializable {
         this.world = world;
         this.organism = null;
         this.empty = true;
-        this.EMPTY_COLOUR = background;
-        setBackground(EMPTY_COLOUR);
+        this.emptyColour = background;
+        setBackground(emptyColour);
         setBorder(new EmptyBorder(0, 0, 0, 0));
         addListener();
     }
+
+    private class SerializableMouseAdapter extends MouseAdapter implements Serializable{};
+
     public void addListener(){
-        addMouseListener(new MouseAdapter() {
+        addMouseListener(new SerializableMouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
@@ -56,16 +59,16 @@ public class Field extends JButton implements Serializable {
         setText(organism.getCharacter());
         setForeground(Color.BLACK);
     }
-    @Override
-    public void setPreferredSize(Dimension preferredSize) {
-        super.setPreferredSize(preferredSize);
-        setSize(preferredSize);
-    }
+//    @Override
+//    public void setPreferredSize(Dimension preferredSize) {
+//        super.setPreferredSize(preferredSize);
+//        setSize(preferredSize);
+//    }
 
     public void clearField(){
         organism = null;
         empty = true;
-        setBackground(EMPTY_COLOUR);
+        setBackground(emptyColour);
         setText("");
     }
 
@@ -80,15 +83,31 @@ public class Field extends JButton implements Serializable {
 
     public Point getPos(){return pos;}
 
-    public void updateFont(Dimension dimension){
+    public void updateFont(int height){
         Font font = getFont();
-        setFont(new Font(font.getName(), Font.PLAIN, dimension.height));
-        setMaximumSize(dimension);
-        setMinimumSize(dimension);
+        setFont(new Font(font.getName(), font.getStyle(), height));
+    }
+
+    @Override
+    public void setSize(int width, int height) {
+        updateFont(height);
+        super.setSize(width, height);
+    }
+
+    @Override
+    public void setBounds(int x, int y, int width, int height) {
+        updateFont(height);
+        super.setBounds(x, y, width, height);
     }
 
     public void setWorld(World world) {
         this.world = world;
+    }
+    public Organism getOrganism() {
+        return organism;
+    }
+    public void setOrganism(Organism o){
+        organism = o;
     }
 
 }

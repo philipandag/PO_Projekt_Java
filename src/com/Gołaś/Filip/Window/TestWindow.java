@@ -15,7 +15,7 @@ public class TestWindow extends GameWindow{
         setLayout(new BorderLayout());
         add(new HexBoard(new Dimension(fieldsHorizontally,fieldsVertically), new World(new Dimension(fieldsHorizontally, fieldsVertically), this, World.BoardType.HEX)), BorderLayout.CENTER);
         setMinimumSize(new Dimension(640, 640));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         pack();
         setMinimumSize(getSize());

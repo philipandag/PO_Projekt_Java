@@ -11,7 +11,7 @@ public abstract class AbstractBoard extends JPanel implements Serializable {
     protected static transient final Dimension defaultSize = new Dimension(640, 640);
     protected Dimension size;
     protected World world;
-    protected Field grid[][];
+    protected Field[][] grid;
 
     protected AbstractBoard(Dimension size, World world){
         int min = Math.min(defaultSize.width/size.width, defaultSize.height/size.height);
@@ -19,7 +19,7 @@ public abstract class AbstractBoard extends JPanel implements Serializable {
         this.world = world;
         this.size = size;
         this.grid = createGrid();
-        //setBorder(BorderFactory.createLineBorder(Color.red));
+        setBorder(BorderFactory.createLineBorder(Color.RED));
     }
     public Field[][] getGrid()
     {

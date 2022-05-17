@@ -5,26 +5,24 @@ import com.Gołaś.Filip.Game.World;
 import java.awt.*;
 
 public class HexField extends Field {
-    private static final double sqrt3 = Math.sqrt(3);
+    private static final double SQRT3 = Math.sqrt(3);
     private Polygon polygon;
     private int sideLength;
-    private int WIDTH;
-    private int HEIGHT;
     private Point center;
+    private int hexWidth;
+    private int hexHeight;
 
     public HexField(Color color, World world, Point pos, int sideLength, int row, int collumn) {
         super(color, world, pos);
         this.pos = new Point(row, collumn);
         this.sideLength = sideLength;
-        this.WIDTH = (int)(sqrt3*sideLength);
-        this.HEIGHT = 2*sideLength;
-        this.center = new Point(getBounds().x + WIDTH/2, getBounds().y + HEIGHT/2);
-        polygon = createHexagon();
+        this.center = new Point((int)(sideLength*SQRT3/2), sideLength);
+        this.polygon = createHexagon();
         setContentAreaFilled(false);
         setFocusPainted(true);
         setBorderPainted(false);
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setLayout(null);
+        setFont(new Font("Monospaced", Font.BOLD, sideLength));
     }
 
     @Override
@@ -39,7 +37,7 @@ public class HexField extends Field {
         g.fillPolygon(polygon);
         g.setColor(Color.BLACK);
         g.drawPolygon(polygon);
-        g.drawString(this.getText(), (int)(center.x*0.85), (int)(center.y*1.2));
+        g.drawString(this.getText(), getWidth()/4, sideLength*3/2);
     }
 
     private Polygon createHexagon(){
@@ -52,5 +50,23 @@ public class HexField extends Field {
             p.addPoint(xval, yval);
         }
         return p;
+    }
+
+
+    @Override
+    public void setBounds(int x, int y, int width, int height) {
+        if(width != getWidth() || height != getHeight() ){
+            super.setBounds(x, y, width, height);
+            this.sideLength = (int) (height / 2.0);
+            this.center = new Point(getWidth() / 2, getHeight() / 2);
+            polygon = createHexagon();
+        } else {
+            super.setBounds(x, y, width, height);
+        }
+    }
+
+    @Override
+    public void updateFont(int fieldHeight) {
+        super.updateFont(fieldHeight*3/4);
     }
 }

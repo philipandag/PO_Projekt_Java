@@ -9,10 +9,8 @@ import java.awt.event.ActionEvent;
 public class NextTurnButton extends JButton {
     GameWindow window;
     public NextTurnButton(GameWindow window) {
-        super("Nastepna Tura");
+        super("Next Turn");
         this.window = window;
-        addActionListener((ActionEvent e) -> {
-                window.getWorld().nextTurn();
-        });
+        addActionListener((ActionEvent e) -> window.getWorld().nextTurn());
     }
 }

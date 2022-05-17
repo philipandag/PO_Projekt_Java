@@ -55,6 +55,7 @@ public class World implements Serializable {
     public World(Dimension size, GameWindow window, BoardType type){
         humanInputListeners = new ArrayList<HumanInputListener>();
         organisms = new OrganismList();
+        Window = window;
         if(type == BoardType.NORMAL) {
             board = new Board(size, this);
             Direction.setMode(Direction.Mode.NORMAL);
@@ -63,10 +64,7 @@ public class World implements Serializable {
             board = new HexBoard(size, this);
             Direction.setMode(Direction.Mode.HEX);
         }
-
-        Window = window;
         System.out.println("# Poczatek gry");
-
         addKeyEventDispatcher();
     }
 
@@ -89,19 +87,15 @@ public class World implements Serializable {
     public World addOrganism(Organism o){
         o.setWorld(this);
         if(board.at(o.getPos()).empty()) {
-            //System.out.println("Dodano organizm " + o.getSpeciesName());
             organisms.add(o);
             board.at(o.getPos()).setField(o);
-        }else
-        {
-            //System.out.println("\tKOLIZJA " + o.getSpeciesName() + " (" + o.getPos().x + " , " + o.getPos().y + ") To miejsce jest juz zajete przez " + board.at(o.getPos()).organism.getSpeciesName());
         }
 
         return this;
     }
 
     public World deleteOrganism(Organism o){
-        if(board.at(o.getPos()).organism == o)
+        if(board.at(o.getPos()).getOrganism() == o)
             board.at(o.getPos()).clearField();
         organisms.remove(o);
         return this;
@@ -114,9 +108,6 @@ public class World implements Serializable {
             Organism o = organisms.get(i);
             if (o.isAlive())
                 o.action();
-            else {
-                toDelete.add(o);
-            }
         }
 
         for(Organism o : organisms) {
@@ -126,14 +117,12 @@ public class World implements Serializable {
         }
 
         for(Organism o : toDelete){
-            if(board.at(o.getPos()).organism == o) {
-                board.at(o.getPos()).clearField();
-            }
+            deleteOrganism(o);
         }
 
-        organisms.removeAll(toDelete);
         toDelete.clear();
         turnNumber++;
+        getWindow().repaint();
     }
 
     public void setWindow(GameWindow okno) {

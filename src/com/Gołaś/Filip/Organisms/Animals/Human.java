@@ -42,27 +42,28 @@ public class Human extends Animal {
     @Override
     public Organism setWorld(World w) {
         super.setWorld(w);
-
         w.addHumanDirectionListener((KeyEvent keyEvent) -> {
-            switch (keyEvent.getKeyCode()) {
-                case KeyEvent.VK_DOWN -> {
-                    setDirectionValue(Direction.Value.S);
-                }
-                case KeyEvent.VK_LEFT -> {
-                    setDirectionValue(Direction.Value.W);
-                }
-                case KeyEvent.VK_RIGHT -> {
-                    setDirectionValue(Direction.Value.E);
-                }
-                case KeyEvent.VK_UP -> {
-                    setDirectionValue(Direction.Value.N);
-                }
-                case KeyEvent.VK_SPACE -> {
-                    if (getSkillCooldown() == 0) {
-                        useSkill();
-                        System.out.println("\tUMIEJETNOSC\tCzlowiek uzywa magicznej mikstury!");
-                    } else {
-                        System.out.println("\tUMIEJETNOSC\tCzlowiek nie moze uzyc mikstury jeszcze przez " + skillCooldown + " tur");
+            if(keyEvent.getID() == keyEvent.KEY_PRESSED) {
+                switch (keyEvent.getKeyCode()) {
+                    case KeyEvent.VK_DOWN -> {
+                        setDirectionValue(Direction.Value.S);
+                    }
+                    case KeyEvent.VK_LEFT -> {
+                        setDirectionValue(Direction.Value.W);
+                    }
+                    case KeyEvent.VK_RIGHT -> {
+                        setDirectionValue(Direction.Value.E);
+                    }
+                    case KeyEvent.VK_UP -> {
+                        setDirectionValue(Direction.Value.N);
+                    }
+                    case KeyEvent.VK_SPACE -> {
+                        if (getSkillCooldown() == 0) {
+                            useSkill();
+                            System.out.println("\tUMIEJETNOSC\tCzlowiek uzywa magicznej mikstury!");
+                        } else {
+                            System.out.println("\tUMIEJETNOSC\tCzlowiek nie moze uzyc mikstury jeszcze przez " + skillCooldown + " tur");
+                        }
                     }
                 }
             }

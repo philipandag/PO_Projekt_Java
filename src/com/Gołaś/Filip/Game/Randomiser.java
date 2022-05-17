@@ -11,7 +11,6 @@ public class Randomiser extends Random {
 
     public boolean chance(double chance){
         int num = nextInt(ACCURRACY);
-        //System.out.println(num + " < " + chance * ACCURRACY);
         return  num < chance * ACCURRACY;
     }
 }

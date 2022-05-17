@@ -7,11 +7,13 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 public class ConsoleWindow extends JFrame {
+    JPanel panel;
+    JTextArea textArea;
     public ConsoleWindow(){
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.BLACK);
-        JTextArea textArea = new JTextArea(16, 64);
+        textArea = new JTextArea(16, 64);
         textArea.setEditable(false);
         textArea.setBackground(Color.BLACK);
         textArea.setForeground(Color.LIGHT_GRAY);
@@ -33,5 +35,16 @@ public class ConsoleWindow extends JFrame {
         setVisible(true);
         setMaximumSize(getSize());
         setMinimumSize(getSize());
+    }
+
+    public void reset(){
+        textArea.setText("");
+    }
+
+    public String getText(){
+        return textArea.getText();
+    }
+    public void setText(String text){
+        textArea.setText(text);
     }
 }
