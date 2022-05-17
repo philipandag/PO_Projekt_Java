@@ -15,6 +15,7 @@ public class GameWindow extends JFrame{
         super("Zwierzatka");
         consoleWindow = new ConsoleWindow();
         world = new World(new Dimension(fieldsHorizontally, fieldsVertically), this, World.BoardType.HEX);
+        world.addKeyEventDispatcher();
         setLayout(new BorderLayout());
         gui = new Gui(this);
         add(gui, BorderLayout.PAGE_START);

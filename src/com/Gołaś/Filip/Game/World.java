@@ -65,7 +65,6 @@ public class World implements Serializable {
             Direction.setMode(Direction.Mode.HEX);
         }
         System.out.println("# Poczatek gry");
-        addKeyEventDispatcher();
     }
 
     public void setBoard(Board board){
@@ -152,5 +151,14 @@ public class World implements Serializable {
 
     public List<HumanInputListener> getHumanInputListeners() {
         return humanInputListeners;
+    }
+    public void anihilate(){
+        //organisms = null;
+        //toDelete = null;
+        //humanInputListeners = null;
+        //board = null;
+        //Window = null;
+        removeKeyEventDispatcher();
+        keyEventDispatcher = null;
     }
 }
