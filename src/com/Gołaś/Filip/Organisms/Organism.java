@@ -12,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public abstract class Organism implements Comparable<Organism>, java.io.Serializable{
+    public static final int ORGANISM_CLASSES = 12;
     protected World world;
     protected AbstractBoard board;
     protected Color color;

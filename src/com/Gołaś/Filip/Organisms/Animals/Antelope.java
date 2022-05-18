@@ -22,7 +22,6 @@ public class Antelope extends Animal {
        this();
        setWorld(world);
     }
-    
     @Override
     public void action() {
         Direction k = new Direction();

@@ -1,7 +1,9 @@
 package com.Gołaś.Filip.Game;
 
 import com.Gołaś.Filip.Listeners.HumanInputListener;
+import com.Gołaś.Filip.Organisms.Animals.*;
 import com.Gołaś.Filip.Organisms.Organism;
+import com.Gołaś.Filip.Organisms.Plants.*;
 import com.Gołaś.Filip.Window.Components.*;
 import com.Gołaś.Filip.Window.GameWindow;
 
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class World implements Serializable {
 
@@ -43,6 +46,28 @@ public class World implements Serializable {
             for(Field f : row){
                 f.setWorld(this);
                 f.addListener();
+            }
+        }
+    }
+
+    public void fill(int times) {
+        Class<? extends Organism>[] allOrgs = new Class[]{Antelope.class, CyberSheep.class, Fox.class, Human.class, Sheep.class, Tortoise.class, Wolf.class, Belladonna.class, Dandelion.class, Grass.class, Guarana.class, PineBorscht.class};
+        Random r = new Random();
+        for(Class c : allOrgs){
+            for(int i = 0; i < times; i++) {
+                while (true) {
+                    Point p = new Point(r.nextInt(0, getBoard().getSize().width), r.nextInt(0, getBoard().getSize().height));
+                    if (board.getGrid()[p.x][p.y].empty()) {
+                        try {
+                            Organism o = (Organism) c.getConstructor(World.class).newInstance(this);
+                            o.setPos(p);
+                            addOrganism(o);
+                            break;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
         }
     }

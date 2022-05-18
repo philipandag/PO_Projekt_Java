@@ -42,4 +42,8 @@ public abstract class AbstractBoard extends JPanel implements Serializable {
     public void setWorld(World world) {
         this.world = world;
     }
+
+    public Dimension getSize(){
+        return size;
+    }
 }
