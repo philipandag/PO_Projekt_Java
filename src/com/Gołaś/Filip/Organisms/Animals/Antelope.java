@@ -1,6 +1,7 @@
 package com.Gołaś.Filip.Organisms.Animals;
 
 import com.Gołaś.Filip.Game.Direction;
+import com.Gołaś.Filip.Game.DirectionInterface;
 import com.Gołaś.Filip.Organisms.Organism;
 import com.Gołaś.Filip.Game.World;
 
@@ -24,7 +25,7 @@ public class Antelope extends Animal {
     }
     @Override
     public void action() {
-        Direction k = new Direction();
+        DirectionInterface k = board.createDirection();
         k.randomise();
         moveTo(new Point(pos.x + 2 * k.getDx(), pos.y + 2 * k.getDy()));
         breedCooldownDown();
@@ -32,24 +33,24 @@ public class Antelope extends Animal {
 
     @Override
     public void collision(Organism attacker) {
-        if(randomiser.chance(ESCAPE_CHANCE))
-            super.collision(attacker);
+        if(World.randomiser.chance(ESCAPE_CHANCE) && escape())
+            System.out.println("\tCOLLISION\tAntelope escapes from " + attacker.getSpeciesName());
         else {
-            escape();
-            System.out.println("\tKOLIZJA\tAntylopa ucieka od " + attacker.getSpeciesName());
+            super.collision(attacker);
         }
     }
 
-    protected void escape(){
-        Direction d = new Direction();
+    protected boolean escape(){
+        DirectionInterface d = board.createDirection();
         d.randomise();
         Point p = new Point();
-        for (int i = 0; i < Direction.SIZE; i++) {
+        for (int i = 0; i < d.getSize(); i++) {
             p.setLocation(pos.x + d.getDx(), pos.y + d.getDy());
-            if (board.onBoard(p) && board.at(p).empty()) {
+            if (board.onBoard(p)) {
                 moveTo(p);
-                break;
+                return true;
             }
         }
+        return false;
     }
 }

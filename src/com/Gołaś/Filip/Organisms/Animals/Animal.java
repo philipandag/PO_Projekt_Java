@@ -1,6 +1,5 @@
 package com.Gołaś.Filip.Organisms.Animals;
 
-import com.Gołaś.Filip.Game.Direction;
 import com.Gołaś.Filip.Organisms.Organism;
 import com.Gołaś.Filip.Game.World;
 
@@ -26,7 +25,7 @@ public abstract class Animal extends Organism {
 
     public void breedWith(Organism attacker){
         if(readyToBreed() && attacker.readyToBreed()) {
-            forceReproduce();
+            reproduce();
             resetBreedCooldown();
         }
     }

@@ -1,6 +1,5 @@
 package com.Gołaś.Filip.Organisms.Plants;
 
-import com.Gołaś.Filip.Game.Direction;
 import com.Gołaś.Filip.Organisms.Organism;
 import com.Gołaś.Filip.Game.World;
 
@@ -33,6 +32,6 @@ public abstract class Plant extends Organism{
 
     @Override
     public boolean readyToBreed() {
-        return super.readyToBreed() && randomiser.chance(breedChance);
+        return super.readyToBreed() && World.randomiser.chance(breedChance);
     }
 }

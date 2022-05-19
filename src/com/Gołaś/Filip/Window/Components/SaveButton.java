@@ -16,12 +16,11 @@ public class SaveButton extends JButton {
         super("Save");
         this.saveFilePath = saveFilePath;
         this.gameWindow = window;
+        setFocusable(false);
         addActionListener((ActionEvent e) -> {
-            try {
-                new FileOutputStream(saveFilePath).close();
-                FileOutputStream fos = new FileOutputStream(saveFilePath);
-                ObjectOutputStream out = new ObjectOutputStream(fos);
-
+            try(FileOutputStream fos = new FileOutputStream(saveFilePath);
+                ObjectOutputStream out = new ObjectOutputStream(fos)
+            ) {
                 out.writeObject(window.getWorld());
                 out.writeObject(window.getConsoleWindow().getText());
 

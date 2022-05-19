@@ -1,7 +1,7 @@
 package com.Gołaś.Filip.Organisms.Animals;
 
 import com.Gołaś.Filip.Game.Direction;
-import com.Gołaś.Filip.Organisms.Organism;
+import com.Gołaś.Filip.Game.DirectionInterface;
 import com.Gołaś.Filip.Game.World;
 
 import java.awt.*;
@@ -10,7 +10,7 @@ public class Fox extends Animal {
     private static final int BREEDING_COOLDOWN = 3;
     private static final int STRENGTH = 3;
     private static final int INITIATIVE = 7;
-    private static final String CHARACTER = "L";
+    private static final String CHARACTER = "F";
     private static final Color COLOR = new Color(120, 50, 20);
 
     public Fox(World world){
@@ -25,10 +25,10 @@ public class Fox extends Animal {
 
     @Override
     public void action() {
-        Direction k = new Direction();
+        DirectionInterface k = board.createDirection();
         k.randomise();
         Point p = new Point();
-        for(int i = 0; i < Direction.SIZE; i++){
+        for(int i = 0; i < k.getSize(); i++){
             p.setLocation(pos.x + k.getDx(), pos.y + k.getDy());
             if(world.getBoard().onBoard(p) && (world.getBoard().at(p).empty() || world.getBoard().at(p).getOrganism().getStrength() <= strength))
             {

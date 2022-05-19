@@ -9,8 +9,6 @@ public class HexField extends Field {
     private Polygon polygon;
     private int sideLength;
     private Point center;
-    private int hexWidth;
-    private int hexHeight;
 
     public HexField(Color color, World world, Point pos, int sideLength, int row, int collumn) {
         super(color, world, pos);

@@ -11,6 +11,7 @@ public class NextTurnButton extends JButton {
     public NextTurnButton(GameWindow window) {
         super("Next Turn");
         this.window = window;
+        setFocusable(false);
         addActionListener((ActionEvent e) -> window.getWorld().nextTurn());
     }
 }

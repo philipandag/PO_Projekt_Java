@@ -14,7 +14,6 @@ public class HexBoardLayoutManager extends BoardLayoutManager {
     public void layoutContainer(Container parent) {
         int calculatedWidth = (int)(parent.getWidth() / (boardDimension.width + (boardDimension.height - 1) / 2.0));
         int calculatedHeight = (int)(parent.getHeight() / (1 + (boardDimension.height-1) * (3.0/4.0)));
-        int smallerDimension = (int)(Math.min(calculatedHeight / 2.0, calculatedWidth / SQRT3));
         Component[] fields = parent.getComponents();
 
         int i = 0;

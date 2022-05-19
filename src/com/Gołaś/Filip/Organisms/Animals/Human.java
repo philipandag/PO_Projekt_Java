@@ -1,25 +1,25 @@
 package com.Gołaś.Filip.Organisms.Animals;
 
 import com.Gołaś.Filip.Game.Direction;
+import com.Gołaś.Filip.Game.DirectionInterface;
 import com.Gołaś.Filip.Listeners.HumanInputListener;
 import com.Gołaś.Filip.Organisms.Organism;
 import com.Gołaś.Filip.Game.World;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Human extends Animal {
     private static final int BREEDING_COOLDOWN = 3;
     private static final int STRENGTH = 5;
     private static final int INITIATIVE = 40;
-    private static final String CHARACTER = "C";
+    private static final String CHARACTER = "H";
     private static final Color COLOR = new Color(150, 50, 255);
     private static final int MAX_SKILL_COOLDOWN = 5;
-    private final Direction direction = new Direction();
+    private DirectionInterface direction = null;
     private int skillCooldown;
     private int bonusStrength;
+    private HumanInputListener listener;
 
     public Human(World world){
         this();
@@ -42,32 +42,29 @@ public class Human extends Animal {
     @Override
     public Organism setWorld(World w) {
         super.setWorld(w);
-        w.addHumanDirectionListener((KeyEvent keyEvent) -> {
-            if(keyEvent.getID() == keyEvent.KEY_PRESSED) {
-                switch (keyEvent.getKeyCode()) {
-                    case KeyEvent.VK_DOWN -> {
-                        setDirectionValue(Direction.Value.S);
-                    }
-                    case KeyEvent.VK_LEFT -> {
-                        setDirectionValue(Direction.Value.W);
-                    }
-                    case KeyEvent.VK_RIGHT -> {
-                        setDirectionValue(Direction.Value.E);
-                    }
-                    case KeyEvent.VK_UP -> {
-                        setDirectionValue(Direction.Value.N);
+        direction = board.createDirection();
+        listener = (KeyEvent keyEvent) -> {
+            if(keyEvent.getID() == KeyEvent.KEY_PRESSED) {
+                return switch (keyEvent.getKeyCode()) {
+                    case KeyEvent.VK_DOWN , KeyEvent.VK_LEFT , KeyEvent.VK_RIGHT , KeyEvent.VK_UP-> {
+                        setDirectionValue(keyEvent.getKeyCode());
+                        yield true;
                     }
                     case KeyEvent.VK_SPACE -> {
                         if (getSkillCooldown() == 0) {
                             useSkill();
-                            System.out.println("\tUMIEJETNOSC\tCzlowiek uzywa magicznej mikstury!");
+                            System.out.println("\tABILITY\tHuman uses the Magic Potion!");
                         } else {
-                            System.out.println("\tUMIEJETNOSC\tCzlowiek nie moze uzyc mikstury jeszcze przez " + skillCooldown + " tur");
+                            System.out.println("\tABILITY\tHuman can't use the Magic Potion for " + skillCooldown + " more turns, strength: " + getStrength());
                         }
+                        yield true;
                     }
-                }
+                    default -> false;
+                };
             }
-        });
+            return false;
+        };
+        w.addHumanDirectionListener(listener);
         return this;
     }
 
@@ -88,16 +85,19 @@ public class Human extends Animal {
         return strength + bonusStrength;
     }
 
-    public Direction getDirection() {
+    public DirectionInterface getDirection() {
         return direction;
     }
 
-    public void setDirectionValue(Direction.Value d){
-        this.direction.set(d);
+    public void setDirectionValue(int dir){
+        direction.setByKey(dir);
     }
 
     public int getSkillCooldown() {
         return skillCooldown;
     }
 
+    public HumanInputListener getListener(){
+        return this.listener;
+    }
 }

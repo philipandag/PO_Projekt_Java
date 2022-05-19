@@ -3,6 +3,7 @@ package com.Gołaś.Filip.Window;
 import com.Gołaś.Filip.Window.Components.AbstractBoard;
 import com.Gołaś.Filip.Window.Components.Gui;
 import com.Gołaś.Filip.Game.World;
+import com.Gołaś.Filip.Window.Components.HexBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,7 @@ public class GameWindow extends JFrame{
     public GameWindow(int fieldsHorizontally, int fieldsVertically) {
         super("Zwierzatka");
         consoleWindow = new ConsoleWindow();
-        world = new World(new Dimension(fieldsHorizontally, fieldsVertically), this, World.BoardType.HEX);
+        world = new World(new Dimension(fieldsHorizontally, fieldsVertically), this, HexBoard.class);
         world.addKeyEventDispatcher();
         setLayout(new BorderLayout());
         gui = new Gui(this);

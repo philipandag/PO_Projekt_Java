@@ -20,10 +20,5 @@ public class Wolf extends Animal {
         super(COLOR, CHARACTER, INITIATIVE, STRENGTH, BREEDING_COOLDOWN, BREEDING_COOLDOWN);
     }
 
-    @Override
-    public void action() {
-        // TODO Empty to use as a wall for testing
-    }
-
     public static Wolf clone(World w) { return new Wolf(w);}
 }

@@ -1,6 +1,7 @@
 package com.Gołaś.Filip.Organisms.Animals;
 
 import com.Gołaś.Filip.Game.Direction;
+import com.Gołaś.Filip.Game.DirectionInterface;
 import com.Gołaś.Filip.Organisms.Organism;
 import com.Gołaś.Filip.Game.World;
 
@@ -10,7 +11,7 @@ public class Tortoise extends Animal {
     private static final int BREEDING_COOLDOWN = 3;
     private static final int STRENGTH = 2;
     private static final int INITIATIVE = 1;
-    private static final String CHARACTER = "Z";
+    private static final String CHARACTER = "T";
     private static final Color COLOR = new Color(60, 80, 60);
     private static final int MINIMUM_ATTACKER_STRENGTH = 5;
     private static final double MOVE_CHANCE = 0.25;
@@ -26,8 +27,8 @@ public class Tortoise extends Animal {
 
     @Override
     public void action() {
-        if(randomiser.chance(MOVE_CHANCE)) {
-        Direction k = new Direction();
+        if(World.randomiser.chance(MOVE_CHANCE)) {
+        DirectionInterface k = board.createDirection();
         k.randomise();
             moveTo(new Point(pos.x + k.getDx(), pos.y + k.getDy()));
         }
@@ -39,7 +40,7 @@ public class Tortoise extends Animal {
         if(attacker.getStrength() > MINIMUM_ATTACKER_STRENGTH)
             fight(attacker);
         else{
-            System.out.println("\tKOLIZJA\tZolw odbija atak " + attacker.getSpeciesName());
+            System.out.println("\tCOLLISION\tTortoise blocks the attack of " + attacker.getSpeciesName());
         }
     }
 }

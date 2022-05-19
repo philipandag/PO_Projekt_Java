@@ -24,6 +24,7 @@ public class Field extends JButton implements Serializable {
         this.organism = null;
         this.empty = true;
         this.emptyColour = background;
+        setFocusable(false);
         setBackground(emptyColour);
         setBorder(new EmptyBorder(0, 0, 0, 0));
         addListener();
@@ -59,11 +60,6 @@ public class Field extends JButton implements Serializable {
         setText(organism.getCharacter());
         setForeground(Color.BLACK);
     }
-//    @Override
-//    public void setPreferredSize(Dimension preferredSize) {
-//        super.setPreferredSize(preferredSize);
-//        setSize(preferredSize);
-//    }
 
     public void clearField(){
         organism = null;

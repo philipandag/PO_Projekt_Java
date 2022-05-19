@@ -72,7 +72,7 @@ public class OrganismPopUp extends JPopupMenu {
                 item = new JMenuItem("Usun");
                 addListener(item, () -> {
                     System.out.println("\t# Removed " + field.organism.getSpeciesName() + " from (" + field.getPos().x + ", " + field.getPos().y + ")");
-                    world.getOrganisms().remove(field.organism);
+                    world.deleteOrganism(field.organism);
                     field.clearField();
                 });
                 add(item);

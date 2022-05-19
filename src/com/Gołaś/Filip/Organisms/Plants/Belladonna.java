@@ -9,7 +9,7 @@ public class Belladonna extends Plant{
     private static final int BREEDING_COOLDOWN = 3;
     private static final double BREED_CHANCE = 0.1;
     private static final int STRENGTH = 99;
-    private static final String CHARACTER = "J";
+    private static final String CHARACTER = "B";
     private static final Color COLOR = new Color(120, 0, 0);
 
     public Belladonna(World world){

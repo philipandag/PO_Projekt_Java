@@ -13,16 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.awt.event.KeyEvent;
-import java.util.Random;
 
 public class World implements Serializable {
-
-    protected OrganismList organisms;
-    protected List<Organism> toDelete = new ArrayList<Organism>();
-    protected List<HumanInputListener> humanInputListeners;
+    private class SerializableList<T> extends ArrayList<T> implements Serializable{}
+    protected OrganismList organisms = new OrganismList();
+    protected SerializableList<Organism> toDelete = new SerializableList<>();
+    protected SerializableList<HumanInputListener> humanInputListeners = new SerializableList<>();
     protected int turnNumber = 1;
     protected AbstractBoard board;
     protected transient GameWindow Window;
+    public static final Randomiser randomiser = new Randomiser();
 
     protected KeyEventDispatcher keyEventDispatcher = (Serializable & KeyEventDispatcher)(KeyEvent ke) -> {
         synchronized (Window) {
@@ -31,69 +31,59 @@ public class World implements Serializable {
                     listener.execute(ke);
                 }
         }
-        return true;
+        return false;
     };
 
-    public void repairRefsInOrganisms() {
-        for(Organism o : organisms){
-            o.setWorld(this);
-            o.setBoard(getBoard());
+    public World(Dimension size, GameWindow window, Class<? extends AbstractBoard> boardClass){
+        Window = window;
+
+        try {
+            board = boardClass.getConstructor(Dimension.class, World.class).newInstance(size, this);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        System.out.println("# The game begins");
+    }
+
+    public void fill(int percentage) {
+        Class<? extends Organism>[] allOrgsExceptHuman = new Class[]{Antelope.class, CyberSheep.class, Fox.class, Sheep.class, Tortoise.class, Wolf.class, Belladonna.class, Dandelion.class, Grass.class, Guarana.class, PineBorscht.class};
+        int organismsToPlace = (int)(board.getSize().width * board.getSize().height * (percentage / 100.0));
+        for(int i = 0; i < organismsToPlace; i++) {
+            placeOrganismRandomly(allOrgsExceptHuman[i % allOrgsExceptHuman.length]);
         }
     }
 
-    public void repairRefsInBoard() {
-        for(Field row[] : board.getGrid()){
-            for(Field f : row){
-                f.setWorld(this);
-                f.addListener();
-            }
-        }
-    }
-
-    public void fill(int times) {
-        Class<? extends Organism>[] allOrgs = new Class[]{Antelope.class, CyberSheep.class, Fox.class, Human.class, Sheep.class, Tortoise.class, Wolf.class, Belladonna.class, Dandelion.class, Grass.class, Guarana.class, PineBorscht.class};
-        Random r = new Random();
-        for(Class c : allOrgs){
-            for(int i = 0; i < times; i++) {
-                while (true) {
-                    Point p = new Point(r.nextInt(0, getBoard().getSize().width), r.nextInt(0, getBoard().getSize().height));
-                    if (board.getGrid()[p.x][p.y].empty()) {
-                        try {
-                            Organism o = (Organism) c.getConstructor(World.class).newInstance(this);
-                            o.setPos(p);
-                            addOrganism(o);
-                            break;
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+    private boolean placeOrganismRandomly(Class<? extends Organism> c){
+        Point p = new Point(randomiser.nextInt(0, getBoard().getSize().width), randomiser.nextInt(0, getBoard().getSize().height));
+        int tries = 0;
+        while (tries < getBoard().getSize().width * getBoard().getSize().height) {
+            if (board.getGrid()[p.x][p.y].empty()) {
+                try {
+                    Organism o = c.getConstructor(World.class).newInstance(this);
+                    o.setPos(p);
+                    addOrganism(o);
+                    return true;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
+            else{
+                moveToNextField(p);
+            }
         }
+        return false;
     }
 
-    public enum BoardType{
-        NORMAL,
-        HEX,
-    }
-
-    public World(Dimension size, GameWindow window, BoardType type){
-        humanInputListeners = new ArrayList<HumanInputListener>();
-        organisms = new OrganismList();
-        Window = window;
-        if(type == BoardType.NORMAL) {
-            board = new Board(size, this);
-            Direction.setMode(Direction.Mode.NORMAL);
+    private void moveToNextField(Point p){
+        if(p.x == board.getSize().width-1) { // last field in this row
+            if (p.y == board.getSize().height - 1) // last filed in the board
+                p.setLocation(0, 0);
+            else
+                p.setLocation(0, p.y + 1);
         }
-        else {
-            board = new HexBoard(size, this);
-            Direction.setMode(Direction.Mode.HEX);
-        }
-        System.out.println("# Poczatek gry");
-    }
-
-    public void setBoard(Board board){
-        this.board = board;
+        else
+            p.setLocation(p.x+1, p.y);
     }
 
     public GameWindow getWindow(){
@@ -102,10 +92,6 @@ public class World implements Serializable {
 
     public AbstractBoard getBoard() {
         return board;
-    }
-
-    public Field[][] getBoardGrid(){
-        return board.getGrid();
     }
 
     public World addOrganism(Organism o){
@@ -122,11 +108,14 @@ public class World implements Serializable {
         if(board.at(o.getPos()).getOrganism() == o)
             board.at(o.getPos()).clearField();
         organisms.remove(o);
+        if(o instanceof Human human){
+            humanInputListeners.remove(human.getListener());
+        }
         return this;
     }
 
     public void nextTurn() {
-        System.out.println("# Nastala tura " + turnNumber);
+        System.out.println("# Turn " + turnNumber);
 
         for(int i = 0; i < organisms.size(); i++) {
             Organism o = organisms.get(i);
@@ -153,11 +142,6 @@ public class World implements Serializable {
         this.Window = okno;
     }
 
-    public void removeHumanDirectionListener(HumanInputListener listener)
-    {
-        humanInputListeners.remove(listener);
-    }
-
     public void addHumanDirectionListener(HumanInputListener listener)
     {
         humanInputListeners.add(listener);
@@ -174,16 +158,4 @@ public class World implements Serializable {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
     }
 
-    public List<HumanInputListener> getHumanInputListeners() {
-        return humanInputListeners;
-    }
-    public void anihilate(){
-        //organisms = null;
-        //toDelete = null;
-        //humanInputListeners = null;
-        //board = null;
-        //Window = null;
-        removeKeyEventDispatcher();
-        keyEventDispatcher = null;
-    }
 }

@@ -1,15 +1,12 @@
 package com.Gołaś.Filip.Organisms;
 
-import com.Gołaś.Filip.Game.Randomiser;
-import com.Gołaś.Filip.Window.Components.AbstractBoard;
-import com.Gołaś.Filip.Window.Components.Board;
 import com.Gołaś.Filip.Game.Direction;
+import com.Gołaś.Filip.Game.DirectionInterface;
+import com.Gołaś.Filip.Window.Components.AbstractBoard;
 import com.Gołaś.Filip.Game.World;
 
 import java.awt.*;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Random;
 
 public abstract class Organism implements Comparable<Organism>, java.io.Serializable{
     public static final int ORGANISM_CLASSES = 12;
@@ -23,7 +20,6 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
     protected int breedCooldown;
     protected int maxBreedCooldown;
     protected boolean alive;
-    protected static final Randomiser randomiser = new Randomiser();
 
     protected Organism(Color color, String character, int initiative, int strength, int breedCooldown, int maxBreedCooldown){
         this.character = character;
@@ -62,7 +58,7 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
     }
 
     public void action(){
-        Direction k = new Direction();
+        DirectionInterface k = board.createDirection();
         k.randomise();
         moveTo(new Point(pos.x + k.getDx(), pos.y + k.getDy()));
         breedCooldownDown();
@@ -80,12 +76,12 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
     }
 
     public void collision(Organism attacker){
-        System.out.println("\tKOLIZJA\t" + attacker.getSpeciesName() + " natrafia na " + getName());
+        System.out.println("\tCOLLISION\t" + attacker.getSpeciesName() + " stumbles upon " + getName());
     }
 
     public void moveTo(Point newPos){
         if (board.onBoard(newPos)) {
-            System.out.println("\tRUCH\t" + getName() + " idzie z (" + pos.x + ", " + pos.y + ") do (" + newPos.x + ", " + newPos.y + ")");
+            System.out.println("\tMOVEMENT\t" + getName() + " goes from (" + pos.x + ", " + pos.y + ") to (" + newPos.x + ", " + newPos.y + ")");
             if(board.at(newPos).empty()) {
                 board.at(pos).setField(null);
                 board.at(newPos).setField(this);
@@ -96,25 +92,16 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
         }
     }
 
-    public void setAt(Point newPos){
-        if (board.onBoard(newPos)) {
-            if(!board.at(newPos).empty())
-                world.deleteOrganism(board.at(newPos).getOrganism());
-            board.at(newPos).setField(this);
-            pos = newPos;
-        }
-    }
-
-    public boolean forceReproduce(){
-        Direction direction = new Direction();
+    public boolean reproduce(){
+        DirectionInterface direction = board.createDirection();
         direction.randomise();
         Point p = new Point();
-        for (int i = 0; i < Direction.SIZE; i++) {
+        for (int i = 0; i < direction.getSize(); i++) {
             p.setLocation(pos.x + direction.getDx(), pos.y + direction.getDy());
             if (board.onBoard(p) && board.at(p).empty()) {
                 Organism child = clone();
                 child.setPos(p);
-                System.out.println("\tROZMNAZANIE\tRodzi sie " + child.getSpeciesName() + " na (" + p.x + ", " + p.y + ")");
+                System.out.println("\tBREEDING\t" + child.getSpeciesName() + " was born on (" + p.x + ", " + p.y + ")");
                 world.addOrganism(child);
                 return true;
             }
@@ -135,7 +122,7 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
     }
 
     public void breed() {
-        if(readyToBreed() && forceReproduce())
+        if(readyToBreed() && reproduce())
             resetBreedCooldown();
     }
 
@@ -161,7 +148,7 @@ public abstract class Organism implements Comparable<Organism>, java.io.Serializ
     }
 
     public void kill(){
-        System.out.println("\tSMIERC\t" + getName() + " umiera!");
+        System.out.println("\tDEATH\t" + getName() + " dies!");
         board.at(this.pos).clearField();
         this.alive = false;
     }

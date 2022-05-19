@@ -17,19 +17,18 @@ public class LoadButton extends JButton {
         super("Load");
         this.window = window;
         this.saveFilePath = saveFilePath;
+        setFocusable(false);
         addActionListener((ActionEvent e) -> {
-            try {
-                FileInputStream fileIn = new FileInputStream(saveFilePath);
-                ObjectInputStream in = new ObjectInputStream(fileIn);
-
+            try(FileInputStream fileIn = new FileInputStream(saveFilePath);
+                ObjectInputStream in = new ObjectInputStream(fileIn)
+            ) {
                 World world = (World) in.readObject();
                 window.setWorld(world);
 
                 String consoleContent = (String) in.readObject();
                 window.getConsoleWindow().setText(consoleContent);
 
-                in.close();
-                fileIn.close();
+
                 System.out.println("# Game loaded!");
             } catch (Exception ex) {
                 ex.printStackTrace();
